@@ -86,6 +86,8 @@ public class Skygrad {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+
+        ModFeatures.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
