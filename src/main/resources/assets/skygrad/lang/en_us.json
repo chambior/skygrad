@@ -9,5 +9,6 @@
   "skygrad.configuration.items": "Item List",
   "skygrad.configuration.logDirtBlock": "Log Dirt Block",
   "skygrad.configuration.magicNumberIntroduction": "Magic Number Text",
-  "skygrad.configuration.magicNumber": "Magic Number"
+  "skygrad.configuration.magicNumber": "Magic Number",
+  "block.skygrad.builders_block": "Builder's Block"
 }

@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad;
 
+import fr.tchkll.skygrad.block.ModBlocks;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -88,6 +89,7 @@ public class Skygrad {
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
 
         ModFeatures.register(modEventBus);
+        ModBlocks.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
