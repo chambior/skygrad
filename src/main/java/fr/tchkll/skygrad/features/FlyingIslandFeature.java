@@ -1,4 +1,4 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.features;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
@@ -53,7 +53,6 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
         int baseX = (origin.getX() >> 4) << 4;
         int baseZ = (origin.getZ() >> 4) << 4;
 
-        System.out.println("[Skygrad] Generating chunk " + baseX/16 + ", " + baseZ/16);
         List<BlockPos> surfacePositions = new ArrayList<>();
 
         boolean placed = false;

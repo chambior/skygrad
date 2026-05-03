@@ -1,7 +1,6 @@
 package fr.tchkll.skygrad;
 
-import fr.tchkll.skygrad.Skygrad;
-import fr.tchkll.skygrad.FlyingIslandFeature;
+import fr.tchkll.skygrad.features.FlyingIslandFeature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;

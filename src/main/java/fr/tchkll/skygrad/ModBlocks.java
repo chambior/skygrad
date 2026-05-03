@@ -1,16 +1,12 @@
-package fr.tchkll.skygrad.block;
+package fr.tchkll.skygrad;
 
-import fr.tchkll.skygrad.Skygrad;
+import fr.tchkll.skygrad.block.BuildersBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-
-import java.util.function.Supplier;
 
 public class ModBlocks {
 

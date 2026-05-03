@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad.block;
 
+import fr.tchkll.skygrad.ModBlocks;
 import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -8,6 +9,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 @EventBusSubscriber(modid = Skygrad.MODID)
 public class BuildersBlockTickHandler {
@@ -50,21 +54,29 @@ public class BuildersBlockTickHandler {
         return false;
     }
 
+    private static final ResourceLocation FLIGHT_MODIFIER_ID =
+            ResourceLocation.fromNamespaceAndPath("skygrad", "builders_block_flight");
+
     private static void applyFlight(ServerPlayer player, boolean canFly) {
         if (player.isCreative() || player.isSpectator()) return;
 
-        boolean changed = false;
+        var attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT);
+        if (attribute == null) return;
 
-        if (canFly && !player.getAbilities().mayfly) {
-            player.getAbilities().mayfly = true;
-            changed = true;
-        } else if (!canFly && player.getAbilities().mayfly) {
-            player.getAbilities().mayfly = false;
-            player.getAbilities().flying = false;
-            changed = true;
-        }
+        boolean hasModifier = attribute.getModifier(FLIGHT_MODIFIER_ID) != null;
 
-        if (changed) {
+        if (canFly && !hasModifier) {
+            // Ajoute le modificateur → valeur 1.0 > 0, le vol est accordé
+            attribute.addTransientModifier(new AttributeModifier(
+                    FLIGHT_MODIFIER_ID,
+                    1.0,
+                    AttributeModifier.Operation.ADD_VALUE
+            ));
+            player.onUpdateAbilities();
+
+        } else if (!canFly && hasModifier) {
+            attribute.removeModifier(FLIGHT_MODIFIER_ID);
+            player.getAbilities().flying = false; // stoppe le vol en cours
             player.onUpdateAbilities();
         }
     }

@@ -1,14 +1,4 @@
 {
-  "itemGroup.skygrad": "Example Mod Tab",
-  "block.skygrad.example_block": "Example Block",
-  "item.skygrad.example_item": "Example Item",
-
-  "skygrad.configuration.title": "Skygrad Configs",
-  "skygrad.configuration.section.skygrad.common.toml": "Skygrad Configs",
-  "skygrad.configuration.section.skygrad.common.toml.title": "Skygrad Configs",
-  "skygrad.configuration.items": "Item List",
-  "skygrad.configuration.logDirtBlock": "Log Dirt Block",
-  "skygrad.configuration.magicNumberIntroduction": "Magic Number Text",
-  "skygrad.configuration.magicNumber": "Magic Number",
-  "block.skygrad.builders_block": "Builder's Block"
+  "block.skygrad.builders_block": "Builder's Block",
+  "itemGroup.skygrad": "Skygrad"
 }
