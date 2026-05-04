@@ -1,6 +1,8 @@
 package fr.tchkll.skygrad.features;
 
 import com.mojang.serialization.Codec;
+import fr.tchkll.skygrad.Config;
+import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -25,15 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
-
-    private static final int    CENTER_Y      = 200;
-    private static final double HM1_THRESHOLD = 0.5;
-    private static final double FACTOR_BUFF   = 0.4;
-    private static final double NOISE_SCALE1  = 1.0 / 96.0;
-    private static final double NOISE_SCALE2  = 1.0 / 16.0;
-    private static final double HM1_MAX       = 32;
-    private static final double HM2_MAX       = 8;
-    private static final double HM3_FACTOR    = 8;
 
     public FlyingIslandFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -55,31 +49,29 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
 
         List<BlockPos> surfacePositions = new ArrayList<>();
 
-        boolean placed = false;
-
-        // — Passe 1 : terrain —
         for (int dx = 0; dx < 16; dx++) {
             for (int dz = 0; dz < 16; dz++) {
                 int x = baseX + dx;
                 int z = baseZ + dz;
 
-                double hm1 = noise1.noise(x * NOISE_SCALE1, 0, z * NOISE_SCALE1);
-                if (hm1 <= HM1_THRESHOLD) continue;
+                double hm1 = noise1.noise(x * (1.0 / Config.NOISE_SCALE1.get()), 0, z * (1.0 / Config.NOISE_SCALE1.get()));
 
-                double yMax1 = CENTER_Y + (hm1 - HM1_THRESHOLD) * HM1_MAX + 1;
-                double yMin1 = CENTER_Y - (hm1 - HM1_THRESHOLD) * HM1_MAX;
+                if (hm1 <= Config.HM1_THRESHOLD.get()) continue;
 
-                double factor1 = Math.clamp((hm1 - HM1_THRESHOLD) / (1 - FACTOR_BUFF - HM1_THRESHOLD), 0, 1);
+                double yMax1 = Config.CENTER_Y.get() + (hm1 - Config.HM1_THRESHOLD.get()) * Config.HM1_MAX.get() + 1;
+                double yMin1 = Config.CENTER_Y.get() - (hm1 - Config.HM1_THRESHOLD.get()) * Config.HM1_MAX.get();
 
-                double hm2 = noise2.noise(x * NOISE_SCALE2, 0, z * NOISE_SCALE2);
+                double factor1 = Math.clamp((hm1 - Config.HM1_THRESHOLD.get()) / (1 - Config.FACTOR_BUFF.get() - Config.HM1_THRESHOLD.get()), 0, 1);
 
-                double yMax2 = factor1 *  (hm2 + 1) * HM2_MAX;
-                double yMin2 = factor1 * -(hm2 + 1) * HM2_MAX;
+                double hm2 = noise2.noise(x * (1.0 / Config.NOISE_SCALE2.get()), 0, z * (1.0 / Config.NOISE_SCALE2.get()));
 
-                double offset = noise3.noise(x * NOISE_SCALE2, 0, z * NOISE_SCALE2);
+                double yMax2 = factor1 *  (hm2 + 1) * Config.HM2_MAX.get();
+                double yMin2 = factor1 * -(hm2 + 1) * Config.HM2_MAX.get();
 
-                int yMin = (int) Math.round(yMin1 + yMin2 + offset * HM3_FACTOR) + 1;
-                int yMax = (int) Math.round(yMax1 + yMax2 + offset * HM3_FACTOR);
+                double offset = noise3.noise(x * (1.0 / Config.NOISE_SCALE2.get()), 0, z * (1.0 / Config.NOISE_SCALE2.get()));
+
+                int yMin = (int) Math.round(yMin1 + yMin2 + offset * Config.HM3_FACTOR.get()) + 1;
+                int yMax = (int) Math.round(yMax1 + yMax2 + offset * Config.HM3_FACTOR.get());
 
                 for (int y = yMin; y <= yMax; y++) {
                     BlockState block;
@@ -96,9 +88,8 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // — Passe 2 : décoration —
         for (BlockPos pos : surfacePositions) {
-            decorateSurface(level, pos, random);
+            decorateSurface(level, pos, random, ctx.chunkGenerator());
         }
 
         return !surfacePositions.isEmpty();
@@ -106,11 +97,11 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
 
     // -------------------------------------------------------------------------
 
-    private void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random) {
+    private void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random, ChunkGenerator generator) {
         Holder<Biome> biome = level.getBiome(pos);
 
         if (random.nextFloat() < treeChance(biome)) {
-            placeTree(level, pos, biome, random);
+            placeTree(level, pos, biome, random, generator);
             return;
         }
 
@@ -129,13 +120,14 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void placeTree(WorldGenLevel level, BlockPos pos,
-                           Holder<Biome> biome, RandomSource random) {
+                           Holder<Biome> biome, RandomSource random,
+                           ChunkGenerator generator) {
         ResourceLocation key = pickTreeKey(biome, random);
         Registry<ConfiguredFeature<?, ?>> registry =
                 level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE);
 
         registry.getOptional(key).ifPresent(feature ->
-                feature.place(level, null, random, pos)
+                feature.place(level, generator, random, pos)
         );
     }
 
