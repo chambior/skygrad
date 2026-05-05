@@ -2,6 +2,7 @@ package fr.tchkll.skygrad;
 
 import fr.tchkll.skygrad.block.BuildersBlock;
 import fr.tchkll.skygrad.block.IslandHeartBlock;
+import fr.tchkll.skygrad.block.TowerSentinelBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -25,6 +26,12 @@ public class ModBlocks {
 
     public static final DeferredBlock<IslandHeartBlock> ISLAND_HEART_BLOCK =
             BLOCKS.register("island_heart", IslandHeartBlock::new);
+
+    public static final DeferredBlock<TowerSentinelBlock> TOWER_SENTINEL_BLOCK =
+            BLOCKS.register("tower_sentinel", TowerSentinelBlock::new);
+
+    public static final DeferredHolder<Item, BlockItem> TOWER_SENTINEL_ITEM =
+            ITEMS.registerSimpleBlockItem("tower_sentinel", TOWER_SENTINEL_BLOCK);
 
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);

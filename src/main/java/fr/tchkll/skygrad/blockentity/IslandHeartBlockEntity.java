@@ -1,12 +1,15 @@
 package fr.tchkll.skygrad.blockentity;
 
 import fr.tchkll.skygrad.ModBlockEntities;
+import fr.tchkll.skygrad.ModBlocks;
+import fr.tchkll.skygrad.structure.FlyingDungeonPiece;
+import fr.tchkll.skygrad.utils.algo.Pixel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -14,18 +17,8 @@ import java.util.List;
 
 public class IslandHeartBlockEntity extends BlockEntity {
 
-    private static final int  TOWER_RADIUS  = 10;  // offset horizontal des tours
-    private static final int  TNT_HEIGHT    = 9;   // y relatif du TNT par rapport au cœur
-    private static final int  WITHER_RADIUS = 50;
-    private static final int  TICK_INTERVAL = 20;
-
-    // Les 4 offsets (dx, dz) des tours par rapport au cœur
-    private static final int[][] TOWER_OFFSETS = {
-            { TOWER_RADIUS,  0},
-            {-TOWER_RADIUS,  0},
-            { 0,  TOWER_RADIUS},
-            { 0, -TOWER_RADIUS}
-    };
+    private static final int WITHER_RADIUS = 50;
+    private static final int TICK_INTERVAL = 20;
 
     public IslandHeartBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ISLAND_HEART_BE.get(), pos, state);
@@ -41,9 +34,14 @@ public class IslandHeartBlockEntity extends BlockEntity {
     }
 
     private static boolean anyTntAlive(Level level, BlockPos heartPos) {
-        for (int[] offset : TOWER_OFFSETS) {
-            BlockPos tntPos = heartPos.offset(offset[0], TNT_HEIGHT, offset[1]);
-            if (level.getBlockState(tntPos).is(Blocks.TNT)) return true;
+        // Heart is at cy+1. Sentinel is at cy + TOWER_HEIGHT + 2, so offset from heart = TOWER_HEIGHT + 1.
+        long seed = (long) heartPos.getX() * 341873128712L + (long) heartPos.getZ() * 132897987541L;
+        List<Pixel> towers = FlyingDungeonPiece.generateTowers(FlyingDungeonPiece.SIZE, RandomSource.create(seed));
+
+        int sentinelY = heartPos.getY() + FlyingDungeonPiece.TOWER_HEIGHT + 1;
+        for (Pixel t : towers) {
+            BlockPos sentinelPos = new BlockPos(heartPos.getX() + t.x(), sentinelY, heartPos.getZ() + t.z());
+            if (level.getBlockState(sentinelPos).is(ModBlocks.TOWER_SENTINEL_BLOCK.get())) return true;
         }
         return false;
     }

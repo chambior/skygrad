@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "skygrad:block/tower_sentinel" }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "planks": "minecraft:block/tnt_side"
+  }
+}
