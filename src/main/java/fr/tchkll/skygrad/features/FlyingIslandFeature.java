@@ -2,7 +2,6 @@ package fr.tchkll.skygrad.features;
 
 import com.mojang.serialization.Codec;
 import fr.tchkll.skygrad.Config;
-import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -54,24 +53,24 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
                 int x = baseX + dx;
                 int z = baseZ + dz;
 
-                double hm1 = noise1.noise(x * (1.0 / Config.NOISE_SCALE1.get()), 0, z * (1.0 / Config.NOISE_SCALE1.get()));
+                double hm1 = noise1.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE1.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE1.get()));
 
-                if (hm1 <= Config.HM1_THRESHOLD.get()) continue;
+                if (hm1 <= Config.ISLAND_HM1_THRESHOLD.get()) continue;
 
-                double yMax1 = Config.CENTER_Y.get() + (hm1 - Config.HM1_THRESHOLD.get()) * Config.HM1_MAX.get() + 1;
-                double yMin1 = Config.CENTER_Y.get() - (hm1 - Config.HM1_THRESHOLD.get()) * Config.HM1_MAX.get();
+                double yMax1 = Config.ISLAND_CENTER_Y.get() + (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get() + 1;
+                double yMin1 = Config.ISLAND_CENTER_Y.get() - (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get();
 
-                double factor1 = Math.clamp((hm1 - Config.HM1_THRESHOLD.get()) / (1 - Config.FACTOR_BUFF.get() - Config.HM1_THRESHOLD.get()), 0, 1);
+                double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get()) / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
 
-                double hm2 = noise2.noise(x * (1.0 / Config.NOISE_SCALE2.get()), 0, z * (1.0 / Config.NOISE_SCALE2.get()));
+                double hm2 = noise2.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE2.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE2.get()));
 
-                double yMax2 = factor1 *  (hm2 + 1) * Config.HM2_MAX.get();
-                double yMin2 = factor1 * -(hm2 + 1) * Config.HM2_MAX.get();
+                double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get();
+                double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get();
 
-                double offset = noise3.noise(x * (1.0 / Config.NOISE_SCALE2.get()), 0, z * (1.0 / Config.NOISE_SCALE2.get()));
+                double offset = noise3.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE2.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE2.get()));
 
-                int yMin = (int) Math.round(yMin1 + yMin2 + offset * Config.HM3_FACTOR.get()) + 1;
-                int yMax = (int) Math.round(yMax1 + yMax2 + offset * Config.HM3_FACTOR.get());
+                int yMin = (int) Math.round(yMin1 + yMin2 + offset * Config.ISLAND_HM3_FACTOR.get()) + 1;
+                int yMax = (int) Math.round(yMax1 + yMax2 + offset * Config.ISLAND_HM3_FACTOR.get());
 
                 for (int y = yMin; y <= yMax; y++) {
                     BlockState block;

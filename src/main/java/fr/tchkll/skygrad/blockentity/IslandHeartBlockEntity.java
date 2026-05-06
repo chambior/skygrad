@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad.blockentity;
 
+import fr.tchkll.skygrad.Config;
 import fr.tchkll.skygrad.ModBlockEntities;
 import fr.tchkll.skygrad.ModBlocks;
 import fr.tchkll.skygrad.structure.FlyingDungeonPiece;
@@ -36,9 +37,9 @@ public class IslandHeartBlockEntity extends BlockEntity {
     private static boolean anyTntAlive(Level level, BlockPos heartPos) {
         // Heart is at cy+1. Sentinel is at cy + TOWER_HEIGHT + 2, so offset from heart = TOWER_HEIGHT + 1.
         long seed = (long) heartPos.getX() * 341873128712L + (long) heartPos.getZ() * 132897987541L;
-        List<Pixel> towers = FlyingDungeonPiece.generateTowers(FlyingDungeonPiece.SIZE, RandomSource.create(seed));
+        List<Pixel> towers = FlyingDungeonPiece.generateTowers(Config.CASTLE_SIZE.get(), RandomSource.create(seed));
 
-        int sentinelY = heartPos.getY() + FlyingDungeonPiece.TOWER_HEIGHT + 1;
+        int sentinelY = heartPos.getY() + Config.CASTLE_TOWER_HEIGHT.get() + 1;
         for (Pixel t : towers) {
             BlockPos sentinelPos = new BlockPos(heartPos.getX() + t.x(), sentinelY, heartPos.getZ() + t.z());
             if (level.getBlockState(sentinelPos).is(ModBlocks.TOWER_SENTINEL_BLOCK.get())) return true;
