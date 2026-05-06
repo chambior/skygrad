@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/fence_inventory",
+  "parent": "minecraft:block/fence_post",
   "textures": {
-    "planks": "minecraft:block/tnt_side"
+    "texture": "minecraft:block/tnt_side"
   }
 }
