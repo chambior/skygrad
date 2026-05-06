@@ -4,12 +4,15 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class Config {
 
-    // ISLANDS CONFIG
+    // -----------------------------------------------------------------------------------------------------------------
+    // FLYING ISLANDS CONFIG
+    // -----------------------------------------------------------------------------------------------------------------
+
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
-    public static final ModConfigSpec.DoubleValue ISLAND_CENTER_Y = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_CENTER_Y = BUILDER
             .comment("Flying islands average y coordinate")
-            .defineInRange("flyingIslandCenterY", 200.0, 0.0, 400.0);
+            .defineInRange("flyingIslandCenterY", 200, 0, 400);
 
     public static final ModConfigSpec.DoubleValue ISLAND_VARIATION_Y = BUILDER
             .comment("Flying islands average y coordinate randomness")
@@ -23,28 +26,38 @@ public class Config {
             .comment("Flying islands island flatness")
             .defineInRange("flyingIslandFlatness", 0.4, 0.0, 1.0);
 
-    public static final ModConfigSpec.DoubleValue ISLAND_NOISE_SCALE1 = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_NOISE_SCALE1 = BUILDER
             .comment("Flying islands average distance")
-            .defineInRange("flyingIslandAverageDistance", 96, 0.0, 1000.0);
+            .defineInRange("flyingIslandAverageDistance", 96, 0, 1000);
 
-    public static final ModConfigSpec.DoubleValue ISLAND_NOISE_SCALE2 = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_NOISE_SCALE2 = BUILDER
             .comment("Flying islands hills steepness")
-            .defineInRange("flyingIslandHillsSteepness", 16, 0.0, 1000.0);
+            .defineInRange("flyingIslandHillsSteepness", 16, 0, 1000);
 
-    public static final ModConfigSpec.DoubleValue ISLAND_HM1_MAX = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_HM1_MAX = BUILDER
             .comment("Flying islands thickness")
-            .defineInRange("flyingIslandThickness", 32, 0.0, 1000.0);
+            .defineInRange("flyingIslandThickness", 32, 0, 1000);
 
-    public static final ModConfigSpec.DoubleValue ISLAND_HM2_MAX = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_HM2_MAX = BUILDER
             .comment("Flying islands hills height")
-            .defineInRange("flyingIslandHillsHeight", 8, 0.0, 1000.0);
+            .defineInRange("flyingIslandHillsHeight", 8, 0, 1000);
 
-    public static final ModConfigSpec.DoubleValue ISLAND_HM3_FACTOR = BUILDER
+    public static final ModConfigSpec.IntValue ISLAND_HM3_FACTOR = BUILDER
             .comment("Flying islands height irregularity")
-            .defineInRange("flyingIslandHeightIrregularity", 8, 0.0, 1000.0);
+            .defineInRange("flyingIslandHeightIrregularity", 8, 0, 1000);
 
+    public static final ModConfigSpec.IntValue ISLAND_ALTITUDE_NOISE_MULTIPLIER = BUILDER
+            .comment("Flying islands altitude variation. ")
+            .defineInRange("flyingIslandAltitudeVariation", 256, 0, 1000);
 
+    public static final ModConfigSpec.IntValue ISLAND_BASE_ALTITUDE_AMPLITUDE = BUILDER
+            .comment("Flying islands altitude amplitude. The central altitude of each")
+            .defineInRange("flyingIslandAltitudeAmplitude", 20, 0, 200);
+
+    // -----------------------------------------------------------------------------------------------------------------
     // CASTLE CONFIG
+    // -----------------------------------------------------------------------------------------------------------------
+
     public static final ModConfigSpec.IntValue CASTLE_SIZE = BUILDER
             .comment("Castle radius")
             .defineInRange("castleSize", 60, 10, 200);

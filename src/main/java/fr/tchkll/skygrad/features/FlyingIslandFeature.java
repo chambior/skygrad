@@ -23,13 +23,18 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.synth.ImprovedNoise;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
 
     public FlyingIslandFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
+    }
+
+    private double gauss(int x, double s) {
+        return Math.exp(- x * x / 57800.0 / s);
+    }
+
+    private double gauss(int x, int z, double s) {
+        return gauss(x, s) * gauss(z, s);
     }
 
     @Override
@@ -41,36 +46,52 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
         ImprovedNoise noise1 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xDEADBEEFL));
         ImprovedNoise noise2 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xCAFEBABEL));
         ImprovedNoise noise3 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xDEDEBABAL));
+        ImprovedNoise noise4 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xBABAFAFAL));
 
         BlockPos origin = ctx.origin();
         int baseX = (origin.getX() >> 4) << 4;
         int baseZ = (origin.getZ() >> 4) << 4;
 
-        List<BlockPos> surfacePositions = new ArrayList<>();
+        boolean generated = false;
 
         for (int dx = 0; dx < 16; dx++) {
             for (int dz = 0; dz < 16; dz++) {
                 int x = baseX + dx;
                 int z = baseZ + dz;
 
-                double hm1 = noise1.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE1.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE1.get()));
+                double g_noise = gauss(x, z, 1);
+                double g_amplitude = gauss(x, z, 3);
+
+                double g_noise_reducer_1 = Math.clamp(g_noise * 10, 1, 100);
+                double g_noise_reducer_2 = Math.clamp(g_noise * 2, 1, 100);
+
+                double g_amplitude_reducer_1 = Math.clamp((1 - g_amplitude), 0, 1);
+                double g_amplitude_reducer_2 = Math.clamp((1 - g_amplitude), 0, 1);
+
+                double hm1 = g_noise + noise1.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)), 0,
+                        z * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)));
 
                 if (hm1 <= Config.ISLAND_HM1_THRESHOLD.get()) continue;
 
                 double yMax1 = Config.ISLAND_CENTER_Y.get() + (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get() + 1;
                 double yMin1 = Config.ISLAND_CENTER_Y.get() - (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get();
 
-                double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get()) / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
+                double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get())
+                        / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
 
-                double hm2 = noise2.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE2.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE2.get()));
+                double hm2 = noise2.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
+                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
 
-                double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get();
-                double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get();
+                double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
+                double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
 
-                double offset = noise3.noise(x * (1.0 / Config.ISLAND_NOISE_SCALE2.get()), 0, z * (1.0 / Config.ISLAND_NOISE_SCALE2.get()));
+                double offset3 = noise3.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
+                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
+                double offset4 = noise4.noise(x * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)), 0,
+                        z * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)));
 
-                int yMin = (int) Math.round(yMin1 + yMin2 + offset * Config.ISLAND_HM3_FACTOR.get()) + 1;
-                int yMax = (int) Math.round(yMax1 + yMax2 + offset * Config.ISLAND_HM3_FACTOR.get());
+                int yMin = (int) Math.round(yMin1 + yMin2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get()) + 1;
+                int yMax = (int) Math.round(yMax1 + yMax2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get());
 
                 for (int y = yMin; y <= yMax; y++) {
                     BlockState block;
@@ -82,21 +103,18 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
 
                 level.setBlock(new BlockPos(x, yMin - 1, z), Blocks.STONE.defaultBlockState(), 2);
 
-                // Bloc au-dessus de la surface = point de départ de la déco
-                surfacePositions.add(new BlockPos(x, yMax + 1, z));
+                decorateSurfaceWithLife(level, new BlockPos(x, yMax + 1, z), random, ctx.chunkGenerator());
+
+                generated = true;
             }
         }
 
-        for (BlockPos pos : surfacePositions) {
-            decorateSurface(level, pos, random, ctx.chunkGenerator());
-        }
-
-        return !surfacePositions.isEmpty();
+        return generated;
     }
 
     // -------------------------------------------------------------------------
 
-    private void decorateSurface(WorldGenLevel level, BlockPos pos, RandomSource random, ChunkGenerator generator) {
+    private void decorateSurfaceWithLife(WorldGenLevel level, BlockPos pos, RandomSource random, ChunkGenerator generator) {
         Holder<Biome> biome = level.getBiome(pos);
 
         if (random.nextFloat() < treeChance(biome)) {
