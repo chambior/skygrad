@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "minecraft:compass" },
+    { "item": "minecraft:compass" }
+  ],
+  "result": {
+    "id": "skygrad:flying_castle_map",
+    "count": 1
+  }
+}

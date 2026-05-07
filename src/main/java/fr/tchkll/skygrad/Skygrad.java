@@ -54,6 +54,7 @@ public class Skygrad {
 
         ModFeatures.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModCreativeTab.register(modEventBus);
         ModStructures.register(modEventBus);
