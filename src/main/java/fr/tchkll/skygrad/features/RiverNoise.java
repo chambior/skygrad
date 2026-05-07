@@ -27,9 +27,9 @@ public final class RiverNoise {
 
     // ── defaults that mirror the POC ─────────────────────────────────────────
 
-    public static final int    DEFAULT_RIVER_QUANTITY = 1;
-    public static final double DEFAULT_SCALE          = 0.008;
-    public static final double DEFAULT_RIVER_WIDTH    = 0.08;
+    public static final int    DEFAULT_RIVER_QUANTITY = 2;
+    public static final double DEFAULT_SCALE          = 0.01;
+    public static final double DEFAULT_RIVER_WIDTH    = 0.12;
     public static final double DEFAULT_TILT_SIZE      = 500.0;
 
     // ── magic numbers from the POC, named for clarity ────────────────────────
@@ -112,7 +112,7 @@ public final class RiverNoise {
         return best;
     }
 
-    /** Yes */
+    /** 1 = full river 0 = no river */
     public double riverValue(double x, double y) {
         var sample = sample(x, y);
 

@@ -48,6 +48,71 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
         return hm1Modifier(Math.sqrt(x * x + z * z));
     }
 
+    private static class ComputeResult
+    {
+        boolean nothing = false;
+        int yMin;
+        int yMax;
+        double factor1;
+
+        public ComputeResult()
+        {
+            this.nothing = true;
+        }
+
+        public ComputeResult(int yMin, int yMax, double factor1)
+        {
+            this.yMin = yMin;
+            this.yMax = yMax;
+            this.factor1 = factor1;
+        }
+    }
+
+    private ComputeResult compute(int x, int z, ImprovedNoise noise1,
+                                  ImprovedNoise noise2, ImprovedNoise noise3,
+                                  ImprovedNoise noise4, RiverNoise rivers)
+    {
+
+        double g_noise = gauss(x, z, 1);
+        double g_amplitude = gauss(x, z, 3);
+
+        double g_noise_reducer_1 = Math.clamp(g_noise * 10, 1, 100);
+        double g_noise_reducer_2 = Math.clamp(g_noise * 2, 1, 100);
+
+        double g_amplitude_reducer_1 = Math.clamp((1 - g_amplitude), 0, 1);
+        double g_amplitude_reducer_2 = Math.clamp((1 - g_amplitude), 0, 1);
+
+        double hm1 = g_noise + noise1.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)), 0,
+                z * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)));
+
+        var hm1mod = hm1Modifier(x,z);
+        hm1 *= hm1mod;
+
+        if (hm1 <= Config.ISLAND_HM1_THRESHOLD.get()) return new ComputeResult();
+
+        double yMax1 = Config.ISLAND_CENTER_Y.get() + (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get() + 1;
+        double yMin1 = Config.ISLAND_CENTER_Y.get() - (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get();
+
+        double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get())
+                / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
+
+        double hm2 = noise2.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
+                z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
+
+        double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
+        double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
+
+        double offset3 = 0.4 * noise3.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
+                z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
+        double offset4 = 0 * noise4.noise(x * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)), 0,
+                z * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)));
+
+        int yMin = (int) Math.round(yMin1 + yMin2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get()) + 1;
+        int yMax = (int) Math.round(yMax1 + yMax2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get());
+
+        return new ComputeResult(yMin, yMax, factor1);
+    }
+
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> ctx) {
         var level  = ctx.level();
@@ -58,6 +123,7 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
         var noise2 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xCAFEBABEL));
         var noise3 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xDEDEBABAL));
         var noise4 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xBABAFAFAL));
+        var rivers = new RiverNoise(seed ^ 0xF1FA1ABBAFED5EEDL);
 
         BlockPos origin = ctx.origin();
         int baseX = (origin.getX() >> 4) << 4;
@@ -70,52 +136,42 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
                 int x = baseX + dx;
                 int z = baseZ + dz;
 
-                double g_noise = gauss(x, z, 1);
-                double g_amplitude = gauss(x, z, 3);
+                var cr = compute(x, z, noise1, noise2, noise3, noise4, rivers);
 
-                double g_noise_reducer_1 = Math.clamp(g_noise * 10, 1, 100);
-                double g_noise_reducer_2 = Math.clamp(g_noise * 2, 1, 100);
+                if(cr.nothing) continue;
 
-                double g_amplitude_reducer_1 = Math.clamp((1 - g_amplitude), 0, 1);
-                double g_amplitude_reducer_2 = Math.clamp((1 - g_amplitude), 0, 1);
+                var yMax = cr.yMax;
+                var yMin = cr.yMin;
+                var factor1 = cr.factor1; // How far from the island border between 0 and 1
 
-                double hm1 = g_noise + noise1.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE1.get() + g_noise_reducer_1)));
+                int RIVER_HEIGHT = 230;
 
-                var hm1mod = hm1Modifier(x,z);
-                hm1 *= hm1mod;
+                double river = rivers.riverValue(x, z) * factor1;
+                boolean isBorder = factor1 < 0.3;
 
-                if (hm1 <= Config.ISLAND_HM1_THRESHOLD.get()) continue;
-
-                double yMax1 = Config.ISLAND_CENTER_Y.get() + (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get() + 1;
-                double yMin1 = Config.ISLAND_CENTER_Y.get() - (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get();
-
-                double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get())
-                        / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
-
-                double hm2 = noise2.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
-
-                double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
-                double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get() * g_amplitude_reducer_2;
-
-                double offset3 = noise3.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() * g_noise_reducer_2)));
-                double offset4 = noise4.noise(x * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)), 0,
-                        z * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get() * g_noise_reducer_1)));
-
-                int yMin = (int) Math.round(yMin1 + yMin2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get()) + 1;
-                int yMax = (int) Math.round(yMax1 + yMax2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get());
+                yMin -= (int) (river * 15);
+                yMax -= (int) (river * 20);
 
                 for (int y = yMin; y <= yMax; y++) {
                     BlockState block;
-                    if      (y == yMax)    block = Blocks.GRASS_BLOCK.defaultBlockState();
-                    else if (y >= yMax - 3) block = Blocks.DIRT.defaultBlockState();
-                    else                   block = Blocks.STONE.defaultBlockState();
+                    if(yMax < RIVER_HEIGHT + 1 && y >= yMax - 3 && !isBorder) block = Blocks.CLAY.defaultBlockState();
+                    else if (y == yMax)             block = Blocks.GRASS_BLOCK.defaultBlockState();
+                    else if (y >= yMax - 3)         block = Blocks.DIRT.defaultBlockState();
+                    else                            block = Blocks.STONE.defaultBlockState();
                     level.setBlock(new BlockPos(x, y, z), block, 2);
                 }
 
-                decorateSurfaceWithLife(level, new BlockPos(x, yMax + 1, z), random, ctx.chunkGenerator());
+                if(yMax < RIVER_HEIGHT && !isBorder)
+                {
+                    for(int y = yMax; y < RIVER_HEIGHT; y++)
+                    {
+                        level.setBlock(new BlockPos(x, y, z), Blocks.WATER.defaultBlockState(), 2);
+                    }
+                }
+                else
+                {
+                    decorateSurfaceWithLife(level, new BlockPos(x, yMax + 1, z), random, ctx.chunkGenerator());
+                }
 
                 level.setBlock(new BlockPos(x, yMin - 1, z), Blocks.STONE.defaultBlockState(), 2);
 
@@ -142,11 +198,11 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
     }
 
     private float treeChance(Holder<Biome> biome) {
-        if (biome.is(BiomeTags.IS_JUNGLE))   return 0.045f;
-        if (biome.is(BiomeTags.IS_FOREST))   return 0.028f;
-        if (biome.is(BiomeTags.IS_TAIGA))    return 0.022f;
-        if (biome.is(BiomeTags.IS_SAVANNA))  return 0.015f;
-        if (biome.is(BiomeTags.IS_BADLANDS)) return 0.009f;
+        if (biome.is(BiomeTags.IS_JUNGLE))   return 0.022f;
+        if (biome.is(BiomeTags.IS_FOREST))   return 0.014f;
+        if (biome.is(BiomeTags.IS_TAIGA))    return 0.011f;
+        if (biome.is(BiomeTags.IS_SAVANNA))  return 0.007f;
+        if (biome.is(BiomeTags.IS_BADLANDS)) return 0.004f;
         return 0.022f; // plaines / défaut
     }
 
