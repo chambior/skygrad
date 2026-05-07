@@ -314,7 +314,8 @@ public class FlyingDungeonPiece extends StructurePiece {
 
             Vec3i size = smallTowerTop.getSize();
             BlockPos origin = new BlockPos(cx + t.x() - size.getX() / 2, cy + Config.CASTLE_TOWER_HEIGHT.get() + 1, cz + t.z() - size.getZ() / 2);
-            smallTowerTop.placeInWorld(level, origin, origin, new StructurePlaceSettings(), random, 2);
+            smallTowerTop.placeInWorld(level, origin, origin,
+                    new StructurePlaceSettings().setBoundingBox(box), random, 2);
         }
 
         BlockPos heartPos = new BlockPos(cx, cy + 1, cz);
@@ -348,7 +349,8 @@ public class FlyingDungeonPiece extends StructurePiece {
 
                 Vec3i size = template.getSize();
                 BlockPos origin = new BlockPos(cx - size.getX() / 2, cy + MAIN_TOWER_HEIGHT() + 2, cz - size.getZ() / 2);
-                template.placeInWorld(level, origin, origin, new StructurePlaceSettings(), random, 2);
+                template.placeInWorld(level, origin, origin,
+                        new StructurePlaceSettings().setBoundingBox(box), random, 2);
             }
         } catch (IOException e) {
             System.out.println("[Skygrad] Failed to load castle_main_tower_top.nbt: " + e);

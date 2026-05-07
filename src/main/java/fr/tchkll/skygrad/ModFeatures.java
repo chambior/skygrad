@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad;
 
+import fr.tchkll.skygrad.features.CentralFlyingIslandFeature;
 import fr.tchkll.skygrad.features.FlyingIslandFeature;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -17,7 +18,12 @@ public class ModFeatures {
             FEATURES.register("flying_island",
                     () -> new FlyingIslandFeature(NoneFeatureConfiguration.CODEC));
 
+    public static final DeferredHolder<Feature<?>, CentralFlyingIslandFeature> CENTRAL_FLYING_ISLAND =
+            FEATURES.register("central_flying_island",
+                    () -> new CentralFlyingIslandFeature(NoneFeatureConfiguration.CODEC));
+
     public static void register(IEventBus bus) {
         FEATURES.register(bus);
     }
+
 }
