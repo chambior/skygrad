@@ -25,6 +25,7 @@ public class IslandHeartBlockEntity extends BlockEntity {
         super(ModBlockEntities.ISLAND_HEART_BE.get(), pos, state);
     }
 
+    @SuppressWarnings("unused")
     public static void serverTick(Level level, BlockPos pos,
                                   BlockState state, IslandHeartBlockEntity be) {
         if (level.getGameTime() % TICK_INTERVAL != 0) return;
@@ -58,10 +59,10 @@ public class IslandHeartBlockEntity extends BlockEntity {
 
             player.addEffect(new MobEffectInstance(
                     MobEffects.WITHER,
-                    TICK_INTERVAL + 5, // durée légèrement supérieure à l'intervalle
-                    3,                 // amplifier 3 = niveau 4
-                    false,             // pas d'ambiance
-                    true               // particules visibles
+                    TICK_INTERVAL + 5,
+                    3,
+                    false,
+                    true
             ));
         }
     }

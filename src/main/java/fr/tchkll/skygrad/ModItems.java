@@ -1,11 +1,12 @@
 package fr.tchkll.skygrad;
 
-import fr.tchkll.skygrad.item.FlyingCastleMapItem;
+import fr.tchkll.skygrad.items.FlyingCastleMapItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+@SuppressWarnings("unused")
 public class ModItems {
 
     public static final DeferredRegister.Items ITEMS =

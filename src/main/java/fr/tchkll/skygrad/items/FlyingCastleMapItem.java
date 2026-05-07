@@ -1,4 +1,4 @@
-package fr.tchkll.skygrad.item;
+package fr.tchkll.skygrad.items;
 
 import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
@@ -19,6 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Right-click to consume this item and receive a vanilla {@code filled_map}
@@ -43,8 +44,8 @@ public class FlyingCastleMapItem extends Item {
         super(properties);
     }
 
-    @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+    @Override @NotNull
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, @NotNull InteractionHand hand) {
         ItemStack inHand = player.getItemInHand(hand);
 
         if (level.isClientSide()) {

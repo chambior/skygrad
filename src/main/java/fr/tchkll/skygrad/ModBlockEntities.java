@@ -12,6 +12,9 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Skygrad.MODID);
 
+    @SuppressWarnings("DataFlowIssue") // BlockEntityType.Builder.build accepts null at runtime;
+                                       // the @NotNull comes from the package-level
+                                       // @ParametersAreNonnullByDefault, not actual code intent.
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<IslandHeartBlockEntity>>
             ISLAND_HEART_BE = BLOCK_ENTITIES.register("island_heart",
             () -> BlockEntityType.Builder

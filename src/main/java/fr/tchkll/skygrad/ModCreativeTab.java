@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @EventBusSubscriber(modid = Skygrad.MODID)
+@SuppressWarnings("unused")
 public class ModCreativeTab {
 
     private static final DeferredRegister<CreativeModeTab> TABS =

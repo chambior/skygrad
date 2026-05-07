@@ -7,6 +7,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+@SuppressWarnings("unused")
 public class ModStructurePieceTypes {
 
     public static final DeferredRegister<StructurePieceType> PIECE_TYPES =
@@ -14,7 +15,7 @@ public class ModStructurePieceTypes {
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType>
             FLYING_DUNGEON_PIECE = PIECE_TYPES.register("flying_dungeon_piece",
-            () -> FlyingDungeonPiece::new);   // ← pointe vers le constructeur de désérialisation
+            () -> FlyingDungeonPiece::new);
 
     public static void register(IEventBus bus) {
         PIECE_TYPES.register(bus);
