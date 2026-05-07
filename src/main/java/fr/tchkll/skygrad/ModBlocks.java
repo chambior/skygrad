@@ -30,9 +30,6 @@ public class ModBlocks {
     public static final DeferredBlock<TowerSentinelBlock> TOWER_SENTINEL_BLOCK =
             BLOCKS.register("tower_sentinel", TowerSentinelBlock::new);
 
-    public static final DeferredHolder<Item, BlockItem> TOWER_SENTINEL_ITEM =
-            ITEMS.registerSimpleBlockItem("tower_sentinel", TOWER_SENTINEL_BLOCK);
-
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);

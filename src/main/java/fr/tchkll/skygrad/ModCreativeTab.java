@@ -15,16 +15,16 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModCreativeTab {
 
     private static final DeferredRegister<CreativeModeTab> TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Skygrad.MODID);
+        DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Skygrad.MODID);
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SKYGRAD_TAB =
-            TABS.register("skygrad_tab", () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.skygrad"))
-                    .withTabsBefore(CreativeModeTabs.BUILDING_BLOCKS)
-                    .icon(() -> ModBlocks.BUILDERS_BLOCK_ITEM.get().getDefaultInstance())
-                    .displayItems((params, output) -> {}) // peuplé par l'event ci-dessous
-                    .build()
-            );
+        TABS.register("skygrad_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.skygrad"))
+            .withTabsBefore(CreativeModeTabs.BUILDING_BLOCKS)
+            .icon(() -> ModBlocks.BUILDERS_BLOCK_ITEM.get().getDefaultInstance())
+            .displayItems((params, output) -> {})
+            .build()
+        );
 
     public static void register(IEventBus bus) {
         TABS.register(bus);
@@ -34,7 +34,7 @@ public class ModCreativeTab {
     public static void populateTab(BuildCreativeModeTabContentsEvent event) {
         if (!event.getTabKey().equals(SKYGRAD_TAB.getKey())) return;
 
-        // Ajoute automatiquement tous les items enregistrés dans ModBlocks.ITEMS
         ModBlocks.ITEMS.getEntries().forEach(holder -> event.accept(holder.get()));
+        ModItems.ITEMS.getEntries().forEach(holder -> event.accept(holder.get()));
     }
 }

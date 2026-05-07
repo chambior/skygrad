@@ -1,8 +1,31 @@
 {
   "block.skygrad.builders_block": "Builder's Block",
   "block.skygrad.tower_sentinel": "Tower Sentinel",
+
   "item.skygrad.flying_castle_map": "Castle Map",
   "item.skygrad.flying_castle_map.not_found": "No flying castle within range",
   "filled_map.skygrad.flying_castle": "Flying Castle Map",
-  "itemGroup.skygrad": "Skygrad"
+
+  "itemGroup.skygrad": "Skygrad",
+
+  "skygrad.config.flyingIslandCenterY": "Island base Y level",
+  "skygrad.config.flyingIslandVariationY": "Island Y randomness",
+  "skygrad.config.flyingIslandCoverage": "Island coverage",
+  "skygrad.config.flyingIslandFlatness": "Island flatness",
+  "skygrad.config.flyingIslandAverageDistance": "Island spacing",
+  "skygrad.config.flyingIslandHillsSteepness": "Hill steepness",
+  "skygrad.config.flyingIslandThickness": "Island thickness",
+  "skygrad.config.flyingIslandHillsHeight": "Hill height",
+  "skygrad.config.flyingIslandHeightIrregularity": "Surface roughness",
+  "skygrad.config.flyingIslandAltitudeVariation": "Altitude variation scale",
+  "skygrad.config.flyingIslandAltitudeAmplitude": "Altitude variation amplitude",
+
+  "skygrad.config.castleSize": "Castle radius",
+  "skygrad.config.castleWallHeight": "Castle wall height",
+  "skygrad.config.castleTowerHeight": "Castle tower height",
+  "skygrad.config.castleIslandDepth": "Castle island depth",
+  "skygrad.config.castleIslandSize": "Castle island size multiplier",
+  "skygrad.config.castleMinimumTowerCount": "Minimum towers per castle",
+  "skygrad.config.castleMaximumTowerCount": "Maximum towers per castle",
+  "skygrad.config.castleIslandDecay": "Castle island edge decay"
 }
