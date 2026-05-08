@@ -1,5 +1,5 @@
 {
-  "parent": "simulated:block/portable_engine/item",
+  "parent": "simulated:block/portable_engine/block",
   "textures": {
     "0": "skygrad:block/sky_engine",
     "particle": "skygrad:block/sky_engine"

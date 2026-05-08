@@ -12,7 +12,7 @@
   "key": {
     "P": { "item": "create:precision_mechanism" },
     "G": { "item": "simulated:gyroscopic_mechanism" },
-    "E": { "item": "create:creative_motor" },
+    "E": { "item": "simulated:red_portable_engine" },
     "N": { "item": "minecraft:nether_star" }
   },
   "result": {

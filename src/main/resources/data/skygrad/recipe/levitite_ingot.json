@@ -1,0 +1,18 @@
+{
+  "type": "create:compacting",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    {
+      "item": "create:zinc_ingot"
+    },
+    {
+      "item": "aeronautics:end_stone_powder",
+      "count": 2
+    }
+  ],
+  "results": [
+    {
+      "id": "skygrad:levitite_ingot"
+    }
+  ]
+}

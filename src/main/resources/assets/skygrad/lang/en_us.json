@@ -1,8 +1,7 @@
 {
   "block.skygrad.builders_block": "Builder's Block",
-  "block.skygrad.sky_engine": "Sky Engine",
+  "block.skygrad.sky_engine": "Rainbow Engine",
   "block.skygrad.tower_sentinel": "Tower Sentinel",
-
   "item.skygrad.flying_castle_map": "Castle Map",
   "item.skygrad.flying_castle_map.not_found": "No flying castle within range",
   "filled_map.skygrad.flying_castle": "Flying Castle Map",

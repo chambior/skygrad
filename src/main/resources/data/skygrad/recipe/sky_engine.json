@@ -1,0 +1,37 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "simulated:laser_pointer"
+    },
+    "B": {
+      "item": "tfmg:circuit_board"
+    },
+    "M": {
+      "item": "tfmg:steel_mechanism"
+    },
+    "E": {
+      "item": "simulated:red_portable_engine"
+    },
+    "Y": {
+      "item": "minecraft:end_stone"
+    },
+    "S": {
+      "item": "skygrad:levitite_sheet"
+    }
+  },
+  "pattern": [
+    " SLS ",
+    "SSMSS",
+    "SEYES",
+    "SSBSS",
+    " SSS "
+  ],
+  "result": {
+    "count": 1,
+    "id": "skygrad:sky_engine"
+  },
+  "show_notification": false
+}
