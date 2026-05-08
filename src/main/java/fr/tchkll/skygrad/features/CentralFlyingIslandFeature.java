@@ -144,7 +144,7 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
                 var yMin = cr.yMin;
                 var factor1 = cr.factor1; // How far from the island border between 0 and 1
 
-                int RIVER_HEIGHT = 230;
+                int RIVER_HEIGHT = Config.ISLAND_CENTER_Y.get();
 
                 double river = rivers.riverValue(x, z) * factor1;
                 boolean isBorder = factor1 < 0.3;
