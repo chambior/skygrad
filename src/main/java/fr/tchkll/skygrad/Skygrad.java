@@ -3,7 +3,11 @@ package fr.tchkll.skygrad;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
+import com.simibubi.create.api.stress.BlockStressValues;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -45,8 +49,15 @@ public class Skygrad {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-        // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
+
+        // Register Sky Engine stress capacity at 4x the simulated red portable engine's value.
+        Block redEngine = BuiltInRegistries.BLOCK.get(ResourceLocation.fromNamespaceAndPath("simulated", "red_portable_engine"));
+        Block skyEngine = ModBlocks.SKY_ENGINE_BLOCK.get();
+        BlockStressValues.CAPACITIES.register(skyEngine, () -> {
+            double base = BlockStressValues.getCapacity(redEngine);
+            return (base > 0 ? base : 1024.0) * 4.0;
+        });
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call

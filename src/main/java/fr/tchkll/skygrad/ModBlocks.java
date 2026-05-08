@@ -3,6 +3,7 @@ package fr.tchkll.skygrad;
 import fr.tchkll.skygrad.block.BuildersBlock;
 import fr.tchkll.skygrad.block.CottonCropBlock;
 import fr.tchkll.skygrad.block.IslandHeartBlock;
+import fr.tchkll.skygrad.block.SkyEngineBlock;
 import fr.tchkll.skygrad.block.TowerSentinelBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -33,6 +34,17 @@ public class ModBlocks {
 
     public static final DeferredBlock<TowerSentinelBlock> TOWER_SENTINEL_BLOCK =
         BLOCKS.register("tower_sentinel", TowerSentinelBlock::new);
+
+    public static final DeferredBlock<SkyEngineBlock> SKY_ENGINE_BLOCK =
+        BLOCKS.register("sky_engine", () -> new SkyEngineBlock(
+            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+                .sound(SoundType.METAL)
+                .strength(3.5f, 6f)
+                .noOcclusion()
+        ));
+
+    public static final DeferredHolder<Item, BlockItem> SKY_ENGINE_ITEM =
+        ITEMS.registerSimpleBlockItem("sky_engine", SKY_ENGINE_BLOCK);
 
     public static final DeferredBlock<CottonCropBlock> COTTON_CROP_BLOCK =
         BLOCKS.register("cotton_crop", () -> new CottonCropBlock(

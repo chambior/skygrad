@@ -1,6 +1,7 @@
 package fr.tchkll.skygrad;
 
 import fr.tchkll.skygrad.blockentity.IslandHeartBlockEntity;
+import fr.tchkll.skygrad.blockentity.SkyEngineBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -21,6 +22,18 @@ public class ModBlockEntities {
                     .of(IslandHeartBlockEntity::new, ModBlocks.ISLAND_HEART_BLOCK.get())
                     .build(null)
     );
+
+    @SuppressWarnings({"DataFlowIssue", "unchecked"})
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SkyEngineBlockEntity>>
+            SKY_ENGINE_BE = BLOCK_ENTITIES.register("sky_engine", () -> {
+                // Create's 3-arg constructor requires the type itself; use array to capture self-reference.
+                BlockEntityType<SkyEngineBlockEntity>[] holder = new BlockEntityType[1];
+                holder[0] = BlockEntityType.Builder
+                        .of((pos, state) -> new SkyEngineBlockEntity(holder[0], pos, state),
+                                ModBlocks.SKY_ENGINE_BLOCK.get())
+                        .build(null);
+                return holder[0];
+            });
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);
