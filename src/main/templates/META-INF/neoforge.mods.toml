@@ -88,19 +88,39 @@ Official mod for the Niebesnyigrad modpack
     ordering="NONE"
     side="BOTH"
 
+# Create dependency
 [[dependencies.${mod_id}]]
     modId="create"
     type="required"
-    reason="Skygrad integrates with Create's contraptions and recipe system."
+    reason="Requires items and crafting systems."
     versionRange="[6.0.10,7)"
     ordering="AFTER"
     side="BOTH"
 
+# Create Aeronautics dependency
 [[dependencies.${mod_id}]]
 modId="aeronautics_bundled"
 type="required"
-reason="Skygrad integrates with Create Aeronautics's contraptions and recipe system."
+reason="Requires items."
 versionRange="[1.2.1,)"
+ordering="AFTER"
+side="BOTH"
+
+# Create Big Cannons dependency
+[[dependencies.${mod_id}]]
+modId="createbigcannons"
+type="required"
+reason="Requires items and crafting systems."
+versionRange="[5.11.3,)"
+ordering="AFTER"
+side="BOTH"
+
+# Create Crafts & Additions dependency
+[[dependencies.${mod_id}]]
+modId="createaddition"
+type="required"
+reason="Requires items."
+versionRange="[1.5.10,)"
 ordering="AFTER"
 side="BOTH"
 

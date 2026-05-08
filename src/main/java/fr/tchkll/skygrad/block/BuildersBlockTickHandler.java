@@ -31,13 +31,11 @@ public class BuildersBlockTickHandler {
     }
 
     private static boolean isNearBuildersBlock(ServerLevel level, BlockPos playerPos) {
-        // Scan AABB cubique autour du joueur
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
 
         for (int dx = -RADIUS; dx <= RADIUS; dx++) {
             for (int dy = -RADIUS; dy <= RADIUS; dy++) {
                 for (int dz = -RADIUS; dz <= RADIUS; dz++) {
-                    // Filtre sphérique (distance euclidienne)
                     if (dx*dx + dy*dy + dz*dz > RADIUS * RADIUS) continue;
 
                     mutable.set(
@@ -66,7 +64,6 @@ public class BuildersBlockTickHandler {
         boolean hasModifier = attribute.getModifier(FLIGHT_MODIFIER_ID) != null;
 
         if (canFly && !hasModifier) {
-            // Ajoute le modificateur → valeur 1.0 > 0, le vol est accordé
             attribute.addTransientModifier(new AttributeModifier(
                     FLIGHT_MODIFIER_ID,
                     1.0,

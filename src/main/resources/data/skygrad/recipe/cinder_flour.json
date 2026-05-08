@@ -1,0 +1,11 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    { "item": "skygrad:ash" },
+    { "item": "create:wheat_flour" }
+  ],
+  "results": [
+    { "id": "create:cinder_flour" }
+  ],
+  "heat_requirement": "heated"
+}

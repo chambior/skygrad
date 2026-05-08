@@ -1,0 +1,9 @@
+{
+  "type": "createaddition:rolling",
+  "ingredients": [
+    { "item": "skygrad:cotton" }
+  ],
+  "results": [
+    { "id": "minecraft:string" }
+  ]
+}

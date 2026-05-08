@@ -21,7 +21,7 @@ public class ModCreativeTab {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SKYGRAD_TAB =
         TABS.register("skygrad_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.skygrad"))
-            .withTabsBefore(CreativeModeTabs.INGREDIENTS)
+            .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
             .icon(() -> ModBlocks.BUILDERS_BLOCK_ITEM.get().getDefaultInstance())
             .displayItems((params, output) -> {})
             .build()

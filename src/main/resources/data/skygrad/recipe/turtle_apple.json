@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ASA",
+    "AAA"
+  ],
+  "key": {
+    "A": { "item": "minecraft:apple" },
+    "S": { "item": "minecraft:turtle_scute" }
+  },
+  "result": {
+    "id": "skygrad:turtle_apple",
+    "count": 8
+  }
+}

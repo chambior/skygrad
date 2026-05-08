@@ -1,0 +1,13 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "skygrad:levitite_ingot"
+    }
+  ],
+  "results": [
+    {
+      "id": "skygrad:levitite_sheet"
+    }
+  ]
+}

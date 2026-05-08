@@ -1,0 +1,22 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "skygrad:levitite_ingot"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "skygrad:levitite_powder"
+    },
+    {
+      "chance": 0.75,
+      "id": "skygrad:levitite_powder"
+    },
+    {
+      "chance": 0.125,
+      "id": "aeronautics:end_stone_powder"
+    }
+  ]
+}

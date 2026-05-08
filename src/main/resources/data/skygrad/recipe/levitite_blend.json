@@ -1,0 +1,16 @@
+{
+  "type": "createbigcannons:melting",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    {
+      "tag": "skygrad:meltable_levitite"
+    }
+  ],
+  "processing_time": 180,
+  "results": [
+    {
+      "amount": 250,
+      "id": "aeronautics:levitite_blend"
+    }
+  ]
+}
