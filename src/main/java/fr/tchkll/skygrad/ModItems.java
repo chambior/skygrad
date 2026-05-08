@@ -16,6 +16,10 @@ public class ModItems {
             ITEMS.register("flying_castle_map",
                     () -> new FlyingCastleMapItem(new Item.Properties().stacksTo(16)));
 
+    public static final DeferredItem<Item> LEVITITE_INGOT =
+            ITEMS.register("levitite_ingot",
+                    () -> new Item(new Item.Properties()));
+
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
     }

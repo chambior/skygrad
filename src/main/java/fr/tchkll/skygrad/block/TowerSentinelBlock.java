@@ -18,7 +18,7 @@ public class TowerSentinelBlock extends Block {
     public TowerSentinelBlock() {
         super(BlockBehaviour.Properties.of()
                 .mapColor(MapColor.FIRE)
-                .strength(999f, 999f)
+                .strength(999f, 6f)
                 .sound(SoundType.STONE)
                 .requiresCorrectToolForDrops()
                 .noLootTable()

@@ -2,6 +2,7 @@ package fr.tchkll.skygrad.structure;
 
 import fr.tchkll.skygrad.Config;
 import fr.tchkll.skygrad.ModBlocks;
+import fr.tchkll.skygrad.ModLootTables;
 import fr.tchkll.skygrad.ModStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -320,6 +321,12 @@ public class FlyingDungeonPiece extends StructurePiece {
 
         BlockPos heartPos = new BlockPos(cx, cy + 1, cz);
         if (box.isInside(heartPos)) level.setBlock(heartPos, ModBlocks.ISLAND_HEART_BLOCK.get().defaultBlockState(), 2);
+
+        // Loot chest sitting directly on top of the heart, inside the central tower shaft.
+        // createChest is the vanilla helper that places a CHEST, sets its block-entity loot
+        // table, picks a sensible facing, and respects the box guard for chunk-by-chunk gen.
+        BlockPos chestPos = new BlockPos(cx, cy + 2, cz);
+        this.createChest(level, box, random, chestPos, ModLootTables.FLYING_CASTLE_CHEST, null);
 
         var towerLayer = bigTowerLayer();
 
