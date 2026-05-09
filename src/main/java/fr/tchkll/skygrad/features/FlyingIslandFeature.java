@@ -53,44 +53,53 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
         int baseZ = (origin.getZ() >> 4) << 4;
 
         boolean generated = false;
-
+        
+        double threshold   = Config.ISLAND_HM1_THRESHOLD.get();
+        double centerY     = Config.ISLAND_CENTER_Y.get();
+        double hm1Max      = Config.ISLAND_HM1_MAX.get();
+        double factorBuff  = Config.ISLAND_FACTOR_BUFF.get();
+        double hm2Max      = Config.ISLAND_HM2_MAX.get();
+        double hm3Factor   = Config.ISLAND_HM3_FACTOR.get();
+        double altAmp      = Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get();
+        double invScale1   = 1.0 / Config.ISLAND_NOISE_SCALE1.get();
+        double invScale2   = 1.0 / Config.ISLAND_NOISE_SCALE2.get();
+        double invScaleAlt = 1.0 / Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get();
+        
         for (int dx = 0; dx < 16; dx++) {
             for (int dz = 0; dz < 16; dz++) {
                 int x = baseX + dx;
                 int z = baseZ + dz;
+                
+                double hm1 = noise1.noise(x * invScale1, 0, z * invScale1);
+                if (hm1 <= threshold) continue;
+                
+                double hm1Excess = hm1 - threshold;
+                double yBase      = centerY + hm1Excess * hm1Max;
+                double yMax1      = yBase + 1;
+                double yMin1      = centerY - hm1Excess * hm1Max;
+                
+                double factor1 = Math.clamp(hm1Excess / (1 - factorBuff - threshold), 0, 1);
+                
+                double hm2     = noise2.noise(x * invScale2, 0, z * invScale2);
+                double hm2Term = factor1 * (hm2 + 1) * hm2Max;
+                double yMax2   =  hm2Term;
+                double yMin2   = -hm2Term;
+                
+                double offset3   = noise3.noise(x * invScale2,   0, z * invScale2);
+                double offset4   = noise4.noise(x * invScaleAlt, 0, z * invScaleAlt);
+                double offsetSum = offset3 * hm3Factor + offset4 * altAmp;
 
-                double hm1 = noise1.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE1.get())), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE1.get())));
-
-                if (hm1 <= Config.ISLAND_HM1_THRESHOLD.get()) continue;
-
-                double yMax1 = Config.ISLAND_CENTER_Y.get() + (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get() + 1;
-                double yMin1 = Config.ISLAND_CENTER_Y.get() - (hm1 - Config.ISLAND_HM1_THRESHOLD.get()) * Config.ISLAND_HM1_MAX.get();
-
-                double factor1 = Math.clamp((hm1 - Config.ISLAND_HM1_THRESHOLD.get())
-                        / (1 - Config.ISLAND_FACTOR_BUFF.get() - Config.ISLAND_HM1_THRESHOLD.get()), 0, 1);
-
-                double hm2 = noise2.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get())), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get())));
-
-                double yMax2 = factor1 *  (hm2 + 1) * Config.ISLAND_HM2_MAX.get();
-                double yMin2 = factor1 * -(hm2 + 1) * Config.ISLAND_HM2_MAX.get();
-
-                double offset3 = noise3.noise(x * (1.0 / (Config.ISLAND_NOISE_SCALE2.get() )), 0,
-                        z * (1.0 / (Config.ISLAND_NOISE_SCALE2.get())));
-                double offset4 = noise4.noise(x * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get())), 0,
-                        z * (1.0 / (Config.ISLAND_ALTITUDE_NOISE_MULTIPLIER.get())));
-
-                int yMin = (int) Math.round(yMin1 + yMin2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get()) + 1;
-                int yMax = (int) Math.round(yMax1 + yMax2 + offset3 * Config.ISLAND_HM3_FACTOR.get() + offset4 * Config.ISLAND_BASE_ALTITUDE_AMPLITUDE.get());
-
-                for (int y = yMin; y <= yMax; y++) {
-                    BlockState block;
-                    if      (y == yMax)    block = Blocks.GRASS_BLOCK.defaultBlockState();
-                    else if (y >= yMax - 3) block = Blocks.DIRT.defaultBlockState();
-                    else                   block = Blocks.STONE.defaultBlockState();
-                    level.setBlock(new BlockPos(x, y, z), block, 2);
-                }
+                int yMin = (int) Math.round(yMin1 - hm2Term + offsetSum) + 1;
+                int yMax = (int) Math.round(yMax1 + hm2Term + offsetSum);
+                int dirtMin = yMax - 3;
+                
+                for (int y = yMin;    y < dirtMin; y++)
+                    level.setBlock(new BlockPos(x, y, z), stone, 2);
+                
+                for (int y = dirtMin; y < yMax;    y++)
+                    level.setBlock(new BlockPos(x, y, z), dirt, 2);
+                    
+                level.setBlock(new BlockPos(x, yMax, z), grass, 2);
 
                 level.setBlock(new BlockPos(x, yMin - 1, z), Blocks.STONE.defaultBlockState(), 2);
 
