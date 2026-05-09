@@ -1,0 +1,58 @@
+{
+  "type": "create:mixing",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    {
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "item": "create:crushed_raw_iron"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    },
+    {
+      "item": "create_ironworks:coal_dust"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "id": "create_ironworks:steel_ingot"
+      }
+    },
+    {
+      "count": 5,
+      "item": {
+        "id": "create_ironworks:steel_nugget"
+      }
+    },
+    {
+      "chance": 0.2,
+      "item": {
+        "id": "minecraft:iron_nugget"
+      }
+    },
+    {
+      "chance": 0.95,
+      "item": {
+        "id": "create:experience_nugget"
+      }
+    }
+  ]
+}
