@@ -1,6 +1,6 @@
 package fr.tchkll.skygrad;
 
-// import fr.tchkll.skygrad.renderer.TowerSentinelRenderer;
+import fr.tchkll.skygrad.renderer.TowerSentinelRenderer;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,10 +34,10 @@ public class SkygradClient {
         Skygrad.LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
     }
 
-    // @SubscribeEvent
-    // static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    //     event.registerBlockEntityRenderer(
-    //             ModBlockEntities.TOWER_SENTINEL_BE.get(),
-    //             TowerSentinelRenderer::new);
-    // }
+    @SubscribeEvent
+    static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(
+                ModBlockEntities.TOWER_SENTINEL_BE.get(),
+                TowerSentinelRenderer::new);
+    }
 }
