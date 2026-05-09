@@ -1,6 +1,11 @@
 {
-  "parent": "minecraft:block/fence_post",
+  "loader": "neoforge:obj",
+  "model": "skygrad:models/block/tower_sentinel.obj",
+  "render_type": "solid",
+  "flip_v": true,
+  "emissive_ambiant": true,
   "textures": {
-    "texture": "minecraft:block/tnt_side"
+    "texture0": "skygrad:block/tower_sentinel",
+    "particle": "skygrad:block/tower_sentinel"
   }
 }

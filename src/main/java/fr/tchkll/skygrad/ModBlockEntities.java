@@ -2,6 +2,7 @@ package fr.tchkll.skygrad;
 
 import fr.tchkll.skygrad.blockentity.IslandHeartBlockEntity;
 import fr.tchkll.skygrad.blockentity.SkyEngineBlockEntity;
+// import fr.tchkll.skygrad.blockentity.TowerSentinelBlockEntity;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -34,6 +35,13 @@ public class ModBlockEntities {
                         .build(null);
                 return holder[0];
             });
+    // public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TowerSentinelBlockEntity>> 
+    //     TOWER_SENTINEL_BE = BLOCK_ENTITIES.register("tower_sentinel",
+    //         () ->
+    //         BlockEntityType.Builder
+    //             .of(TowerSentinelBlockEntity::new, ModBlocks.TOWER_SENTINEL_BLOCK.get())
+    //             .build(null)
+    // );
 
     public static void register(IEventBus bus) {
         BLOCK_ENTITIES.register(bus);

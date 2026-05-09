@@ -22,6 +22,7 @@ public class TowerSentinelBlock extends Block {
                 .sound(SoundType.STONE)
                 .requiresCorrectToolForDrops()
                 .noLootTable()
+                .noOcclusion()
         );
     }
 
@@ -35,5 +36,10 @@ public class TowerSentinelBlock extends Block {
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level,
                                         BlockPos pos, CollisionContext context) {
         return POST_SHAPE;
+    }
+
+    @Override
+    public boolean useShapeForLightOcclusion(BlockState state) {
+        return false;
     }
 }
