@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "I I",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/bronze"
+    }
+  },
+  "result": {
+    "id": "create_ironworks:bronze_armor_chestplate"
+  }
+}

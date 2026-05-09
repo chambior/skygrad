@@ -1,0 +1,40 @@
+{
+  "type": "create:mixing",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "create_ironworks:charcoal_dust"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "id": "create_ironworks:steel_nugget"
+      }
+    },
+    {
+      "chance": 0.07,
+      "item": {
+        "id": "create_ironworks:steel_nugget"
+      }
+    },
+    {
+      "chance": 0.3,
+      "item": {
+        "id": "minecraft:iron_nugget"
+      }
+    },
+    {
+      "chance": 0.19,
+      "item": {
+        "id": "create:experience_nugget"
+      }
+    }
+  ]
+}

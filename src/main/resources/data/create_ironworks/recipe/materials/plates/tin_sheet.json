@@ -1,0 +1,15 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "create_ironworks:tin_ingot"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "id": "create_ironworks:tin_sheet"
+      }
+    }
+  ]
+}

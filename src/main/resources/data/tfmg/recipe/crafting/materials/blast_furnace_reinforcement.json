@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "tfmg:fireproof_bricks"
+    },
+    "I": {
+      "tag": "c:ingots/steel"
+    },
+    "O": {
+      "tag": "c:plates/steel"
+    }
+  },
+  "pattern": [
+    "IOB",
+    "IOB",
+    "IOB"
+  ],
+  "result": {
+    "count": 4,
+    "id": "tfmg:blast_furnace_reinforcement"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "create:pressing",
+  "ingredients": [
+    {
+      "item": "c:ingots/bronze"
+    }
+  ],
+  "results": [
+    {
+      "item": {
+        "id": "create_ironworks:bronze_sheet"
+      }
+    }
+  ]
+}

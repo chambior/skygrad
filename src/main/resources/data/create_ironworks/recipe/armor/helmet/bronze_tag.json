@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "III",
+    "I I",
+    "   "
+  ],
+  "key": {
+    "I": {
+      "tag": "c:ingots/bronze"
+    }
+  },
+  "result": {
+    "id": "create_ironworks:bronze_armor_helmet"
+  }
+}
