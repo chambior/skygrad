@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "CCC",
+    "BPB"
+  ],
+  "key": {
+    "C": { "item": "createbigcannons:packed_guncotton" },
+    "B": { "item": "minecraft:iron_block" },
+    "P": { "tag": "minecraft:wooden_slabs" }
+  },
+  "result": {
+    "id": "createbigcannons:he_shell",
+    "count": 1
+  }
+}

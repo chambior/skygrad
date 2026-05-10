@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad;
 
+import fr.tchkll.skygrad.blockentity.FortressHeartBlockEntity;
 import fr.tchkll.skygrad.blockentity.IslandHeartBlockEntity;
 import fr.tchkll.skygrad.blockentity.SkyEngineBlockEntity;
 import fr.tchkll.skygrad.blockentity.TowerSentinelBlockEntity;
@@ -24,6 +25,16 @@ public class ModBlockEntities {
                     .build(null)
     );
 
+    @SuppressWarnings("DataFlowIssue") // BlockEntityType.Builder.build accepts null at runtime;
+    // the @NotNull comes from the package-level
+    // @ParametersAreNonnullByDefault, not actual code intent.
+    public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<FortressHeartBlockEntity>>
+            FORTRESS_HEART_BE = BLOCK_ENTITIES.register("fortress_heart",
+            () -> BlockEntityType.Builder
+                    .of(FortressHeartBlockEntity::new, ModBlocks.FORTRESS_HEART_BLOCK.get())
+                    .build(null)
+    );
+
     @SuppressWarnings({"DataFlowIssue", "unchecked"})
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<SkyEngineBlockEntity>>
             SKY_ENGINE_BE = BLOCK_ENTITIES.register("sky_engine", () -> {
@@ -35,6 +46,7 @@ public class ModBlockEntities {
                         .build(null);
                 return holder[0];
             });
+
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TowerSentinelBlockEntity>> 
         TOWER_SENTINEL_BE = BLOCK_ENTITIES.register("tower_sentinel",
             () ->

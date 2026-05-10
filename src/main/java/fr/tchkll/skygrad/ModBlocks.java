@@ -1,10 +1,6 @@
 package fr.tchkll.skygrad;
 
-import fr.tchkll.skygrad.block.BuildersBlock;
-import fr.tchkll.skygrad.block.CottonCropBlock;
-import fr.tchkll.skygrad.block.IslandHeartBlock;
-import fr.tchkll.skygrad.block.SkyEngineBlock;
-import fr.tchkll.skygrad.block.TowerSentinelBlock;
+import fr.tchkll.skygrad.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Blocks;
@@ -31,6 +27,9 @@ public class ModBlocks {
 
     public static final DeferredBlock<IslandHeartBlock> ISLAND_HEART_BLOCK =
         BLOCKS.register("island_heart", IslandHeartBlock::new);
+
+    public static final DeferredBlock<FortressHeartBlock> FORTRESS_HEART_BLOCK =
+            BLOCKS.register("fortress_heart", FortressHeartBlock::new);
 
     public static final DeferredBlock<TowerSentinelBlock> TOWER_SENTINEL_BLOCK =
         BLOCKS.register("tower_sentinel", TowerSentinelBlock::new);

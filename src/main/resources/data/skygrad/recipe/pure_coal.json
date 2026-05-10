@@ -1,0 +1,26 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "item": "minecraft:charcoal"
+    },
+    {
+      "type": "neoforge:single",
+      "amount": 200,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "processing_time": 300,
+  "results": [
+    {
+      "id": "minecraft:coal",
+      "count": 2
+    }
+  ]
+}

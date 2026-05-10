@@ -109,5 +109,49 @@ public class Config {
             .translation("skygrad.config.castleIslandDecay")
             .defineInRange("castleIslandDecay", 20, 0, 100);
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // FORTRESS CONFIG
+    // -----------------------------------------------------------------------------------------------------------------
+
+    public static final ModConfigSpec.IntValue FORTRESS_SIZE = BUILDER
+            .comment("Fortress radius")
+            .translation("skygrad.config.fortressSize")
+            .defineInRange("fortressSize", 120, 10, 200);
+
+    public static final ModConfigSpec.IntValue FORTRESS_WALL_HEIGHT = BUILDER
+            .comment("Fortress wall height")
+            .translation("skygrad.config.fortressWallHeight")
+            .defineInRange("fortressWallHeight", 12, 2, 60);
+
+    public static final ModConfigSpec.IntValue FORTRESS_TOWER_HEIGHT = BUILDER
+            .comment("Fortress towers height")
+            .translation("skygrad.config.fortressTowerHeight")
+            .defineInRange("fortressTowerHeight", 16, 2, 60);
+
+    public static final ModConfigSpec.IntValue FORTRESS_ISLAND_DEPTH = BUILDER
+            .comment("Fortress island depth")
+            .translation("skygrad.config.fortressIslandDepth")
+            .defineInRange("fortressIslandDepth", 32, 0, 100);
+
+    public static final ModConfigSpec.DoubleValue FORTRESS_ISLAND_SIZE = BUILDER
+            .comment("Fortress island size multiplier")
+            .translation("skygrad.config.fortressIslandSize")
+            .defineInRange("fortressIslandSize", 1.3, 1.2, 10.0);
+
+    public static final ModConfigSpec.IntValue FORTRESS_MINIMUM_TOWER_COUNT = BUILDER
+            .comment("Fortress minimum tower count")
+            .translation("skygrad.config.fortressMinimumTowerCount")
+            .defineInRange("fortressMinimumTowerCount", 18, 3, 100);
+
+    public static final ModConfigSpec.IntValue FORTRESS_MAXIMUM_TOWER_COUNT = BUILDER
+            .comment("Fortress maximum tower count")
+            .translation("skygrad.config.fortressMaximumTowerCount")
+            .defineInRange("fortressMaximumTowerCount", 24, 3, 100);
+
+    public static final ModConfigSpec.IntValue FORTRESS_ISLAND_DECAY = BUILDER
+            .comment("Fortress island decay")
+            .translation("skygrad.config.fortressIslandDecay")
+            .defineInRange("fortressIslandDecay", 10, 0, 100);
+
     static final ModConfigSpec SPEC = BUILDER.build();
 }

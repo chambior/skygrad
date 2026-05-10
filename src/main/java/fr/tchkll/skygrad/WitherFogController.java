@@ -4,6 +4,7 @@ import fr.tchkll.skygrad.client.SkygraduSSBO;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 public class WitherFogController {
 
@@ -39,22 +40,25 @@ public class WitherFogController {
     }
 
     public static void tickPlayer(Player player) {
-        if (player.level().isClientSide()) return;
-        if (player.level().getGameTime() % APPLY_INTERVAL_TICKS != 0) return;
-        if (player.isCreative() || player.isSpectator()) return;
-        if (player.getY() >= Y_THRESHOLD) return;
-        if (player.hasEffect(MobEffects.REGENERATION)) return;
+        Level level = player.level();
 
-        long dayTime = player.level().getDayTime() % DAY_LENGTH;
+        if (level.isClientSide()) return;
+        if (level.getGameTime() % APPLY_INTERVAL_TICKS != 0) return;
+        if (player.isCreative() || player.isSpectator()) return;
+        if (player.hasEffect(MobEffects.REGENERATION)) return;
+        if (level.dimension() == Level.END) return;
+        if (player.getY() >= 150 && level.dimension() != Level.NETHER) return;
+
+        long dayTime = level.getDayTime() % DAY_LENGTH;
         int amplifier = witherAmplifierForTime(dayTime);
-        if (amplifier < 0) return;
+        if(level.dimension() == Level.NETHER) amplifier = 2;
 
         player.addEffect(new MobEffectInstance(
-            MobEffects.WITHER,
-            WITHER_DURATION + 5,
-            amplifier,
-            false,
-            true
+                MobEffects.WITHER,
+                WITHER_DURATION + 5,
+                amplifier,
+                false,
+                true
         ));
     }
 

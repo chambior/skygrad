@@ -1,0 +1,34 @@
+{
+  "type": "create:mechanical_crafting",
+  "accept_mirrored": false,
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "aeronautics:end_stone_powder"
+    },
+    "G": {
+      "item": "minecraft:shulker_shell"
+    },
+    "B": {
+      "item": "tfmg:circuit_board"
+    },
+    "M": {
+      "item": "tfmg:steel_mechanism"
+    },
+    "S": {
+      "item": "skygrad:levitite_sheet"
+    }
+  },
+  "pattern": [
+    "GEEEG",
+    "ESBSE",
+    "EBMBE",
+    "ESBSE",
+    "GEEEG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:wither_skeleton_skull"
+  },
+  "show_notification": false
+}

@@ -1,0 +1,130 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "the_promised_land"
+	group: ""
+	id: "4A51E125987A62FD"
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			id: "662D9E36AEFA9529"
+			tasks: [{
+				id: "1F7BCD141E365B01"
+				item: { count: 1, id: "minecolonies:blockhuttownhall" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["662D9E36AEFA9529"]
+			disable_recipe_mod: false
+			id: "71C1199AF2B7E1E9"
+			tasks: [{
+				id: "40613316BF28EF9A"
+				item: { count: 1, id: "minecolonies:blockhutbuilder" }
+				type: "item"
+			}]
+			x: -8.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["71C1199AF2B7E1E9"]
+			id: "2527DE06A0AD3768"
+			tasks: [{
+				id: "297492E23D942EB7"
+				item: { count: 1, id: "minecolonies:blockhuttavern" }
+				type: "item"
+			}]
+			x: -7.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["71C1199AF2B7E1E9"]
+			id: "557C0861727C8A29"
+			tasks: [{
+				id: "7368207AF2F8AA1F"
+				item: { count: 1, id: "minecolonies:blockhutfarmer" }
+				type: "item"
+			}]
+			x: -7.0d
+			y: -1.5d
+		}
+		{
+			dependencies: ["71C1199AF2B7E1E9"]
+			id: "3EC5AA8AF11A6C2C"
+			tasks: [{
+				id: "0725CA468D72BC2A"
+				item: { count: 1, id: "minecolonies:blockhutlumberjack" }
+				type: "item"
+			}]
+			x: -7.0d
+			y: 1.5d
+		}
+		{
+			dependencies: ["2527DE06A0AD3768"]
+			id: "49844AB36EECF3EA"
+			tasks: [{
+				id: "171A0E12CBA40A7F"
+				item: { count: 1, id: "minecolonies:blockhutwarehouse" }
+				type: "item"
+			}]
+			x: -5.5d
+			y: -0.5d
+		}
+		{
+			dependencies: ["2527DE06A0AD3768"]
+			id: "500913453712494D"
+			tasks: [{
+				id: "2E5B3B198424E6D2"
+				item: { count: 1, id: "minecolonies:blockhutdeliveryman" }
+				type: "item"
+			}]
+			x: -5.5d
+			y: 0.5d
+		}
+		{
+			dependencies: [
+				"49844AB36EECF3EA"
+				"500913453712494D"
+			]
+			id: "5709659B89F01FFA"
+			tasks: [{
+				id: "5B64EE434C2D255B"
+				item: { count: 1, id: "minecolonies:blockhuthospital" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: 0.0d
+		}
+		{
+			dependencies: [
+				"49844AB36EECF3EA"
+				"500913453712494D"
+			]
+			id: "48CE8918953F08BE"
+			tasks: [{
+				id: "66EAC9320C618F55"
+				item: { count: 1, id: "minecolonies:blockhutschool" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"49844AB36EECF3EA"
+				"500913453712494D"
+			]
+			id: "55E77C1C0117E39E"
+			tasks: [{
+				id: "3EE0207A29437B95"
+				item: { count: 1, id: "minecolonies:blockhutuniversity" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: 1.0d
+		}
+	]
+}

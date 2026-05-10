@@ -1,6 +1,7 @@
 package fr.tchkll.skygrad;
 
 import fr.tchkll.skygrad.structure.FlyingDungeonPiece;
+import fr.tchkll.skygrad.structure.FlyingFortressPiece;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +17,10 @@ public class ModStructurePieceTypes {
     public static final DeferredHolder<StructurePieceType, StructurePieceType>
             FLYING_DUNGEON_PIECE = PIECE_TYPES.register("flying_dungeon_piece",
             () -> FlyingDungeonPiece::new);
+
+    public static final DeferredHolder<StructurePieceType, StructurePieceType>
+            FLYING_FORTRESS_PIECE = PIECE_TYPES.register("flying_fortress_piece",
+            () -> FlyingFortressPiece::new);
 
     public static void register(IEventBus bus) {
         PIECE_TYPES.register(bus);

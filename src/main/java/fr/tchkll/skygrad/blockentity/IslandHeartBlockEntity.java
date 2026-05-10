@@ -50,7 +50,7 @@ public class IslandHeartBlockEntity extends BlockEntity {
 
         int sentinelY = heartPos.getY() + Config.CASTLE_TOWER_HEIGHT.get() + 1;
         for (Pixel t : towers) {
-            BlockPos sentinelPos = new BlockPos(heartPos.getX() + t.x(), sentinelY, heartPos.getZ() + t.z());
+            BlockPos sentinelPos = new BlockPos(heartPos.getX() + t.x(), sentinelY - 1, heartPos.getZ() + t.z());
             if (level.getBlockState(sentinelPos).is(ModBlocks.TOWER_SENTINEL_BLOCK.get())) return true;
         }
         return false;

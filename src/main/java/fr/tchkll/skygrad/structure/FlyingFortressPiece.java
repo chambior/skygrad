@@ -34,23 +34,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class FlyingDungeonPiece extends StructurePiece {
+public class FlyingFortressPiece extends StructurePiece {
 
     private final BlockPos center;
 
-    public FlyingDungeonPiece(BlockPos center) {
-        super(ModStructurePieceTypes.FLYING_DUNGEON_PIECE.get(), 0, makeBbox(center));
+    public FlyingFortressPiece(BlockPos center) {
+        super(ModStructurePieceTypes.FLYING_FORTRESS_PIECE.get(), 0, makeBbox(center));
         this.center = center;
     }
 
     @SuppressWarnings("unused")
-    public FlyingDungeonPiece(StructurePieceSerializationContext ctx, CompoundTag tag) {
-        super(ModStructurePieceTypes.FLYING_DUNGEON_PIECE.get(), tag);
+    public FlyingFortressPiece(StructurePieceSerializationContext ctx, CompoundTag tag) {
+        super(ModStructurePieceTypes.FLYING_FORTRESS_PIECE.get(), tag);
         this.center = new BlockPos(tag.getInt("cx"), tag.getInt("cy"), tag.getInt("cz"));
     }
 
-    private static int BBOX_RADIUS() { return Config.CASTLE_SIZE.get() / 2 + 4; }
-    private static int MAIN_TOWER_HEIGHT() { return Config.CASTLE_TOWER_HEIGHT.get() * 2; }
+    private static int BBOX_RADIUS() { return Config.FORTRESS_SIZE.get() / 2 + 4; }
+    private static int MAIN_TOWER_HEIGHT() { return Config.FORTRESS_TOWER_HEIGHT.get() * 2; }
 
     @Override @ParametersAreNonnullByDefault
     protected void addAdditionalSaveData(StructurePieceSerializationContext ctx, CompoundTag tag) {
@@ -62,20 +62,20 @@ public class FlyingDungeonPiece extends StructurePiece {
     private static BoundingBox makeBbox(BlockPos c) {
         int r = BBOX_RADIUS();
         return new BoundingBox(
-                c.getX() - r, c.getY() - Config.CASTLE_ISLAND_DEPTH.get() - 3, c.getZ() - r,
-                c.getX() + r, c.getY() + MAIN_TOWER_HEIGHT() + 2, c.getZ() + r);
+                c.getX() - r, c.getY() - Config.FORTRESS_ISLAND_DEPTH.get() - 3, c.getZ() - r,
+                c.getX() + r, c.getY() + MAIN_TOWER_HEIGHT() + 30, c.getZ() + r);
     }
 
     // Deterministic random seeded from center so every chunk call produces the same towers.
     private List<Pixel> getTowers() {
         long seed = (long) center.getX() * 341873128712L + (long) center.getZ() * 132897987541L;
-        return generateTowers(Config.CASTLE_SIZE.get(), RandomSource.create(seed));
+        return generateTowers(Config.FORTRESS_SIZE.get(), RandomSource.create(seed));
     }
 
     // Mirrors generate_towers(size) from the Python POC.
     public static List<Pixel> generateTowers(int size, RandomSource rng) {
-        int numTowers = Config.CASTLE_MINIMUM_TOWER_COUNT.get() +
-                rng.nextInt(Config.CASTLE_MAXIMUM_TOWER_COUNT.get() - Config.CASTLE_MINIMUM_TOWER_COUNT.get() + 1);
+        int numTowers = Config.FORTRESS_MINIMUM_TOWER_COUNT.get() +
+                rng.nextInt(Config.FORTRESS_MAXIMUM_TOWER_COUNT.get() - Config.FORTRESS_MINIMUM_TOWER_COUNT.get() + 1);
 
         List<Pixel> towers = new ArrayList<>();
         for (int t = 0; t < numTowers; t++) {
@@ -143,8 +143,8 @@ public class FlyingDungeonPiece extends StructurePiece {
     {
         var r = rng.nextInt(100);
 
-        if(r < 30) return Blocks.CRACKED_STONE_BRICKS.defaultBlockState();
-        return Blocks.STONE_BRICKS.defaultBlockState();
+        if(r < 30) return Blocks.END_STONE.defaultBlockState();
+        return Blocks.END_STONE_BRICKS.defaultBlockState();
     }
 
     private static BlockState getDeepslateBrick()
@@ -162,15 +162,15 @@ public class FlyingDungeonPiece extends StructurePiece {
         var blocks = new ArrayList<List<Pixel>>();
 
         blocks.add(Arrays.asList(
-            new Pixel(-4,-1), new Pixel(-4,+1), new Pixel(-3,-2), new Pixel(-3,+2),
-            new Pixel(-1,-4), new Pixel(+1,-4), new Pixel(-2,-3), new Pixel(+2,-3),
-            new Pixel(+4,-1), new Pixel(+4,+1), new Pixel(+3,-2), new Pixel(+3,+2),
-            new Pixel(-1,+4), new Pixel(+1,+4), new Pixel(-2,+3), new Pixel(+2,+3)
+                new Pixel(-4,-1), new Pixel(-4,+1), new Pixel(-3,-2), new Pixel(-3,+2),
+                new Pixel(-1,-4), new Pixel(+1,-4), new Pixel(-2,-3), new Pixel(+2,-3),
+                new Pixel(+4,-1), new Pixel(+4,+1), new Pixel(+3,-2), new Pixel(+3,+2),
+                new Pixel(-1,+4), new Pixel(+1,+4), new Pixel(-2,+3), new Pixel(+2,+3)
         )); // Stonebrick
 
         blocks.add(Arrays.asList(
-            new Pixel(+4,0), new Pixel(-4,0), new Pixel(0,+4), new Pixel(0,-4),
-            new Pixel(+3,+3), new Pixel(+3,-3), new Pixel(-3,+3), new Pixel(-3,-3)
+                new Pixel(+4,0), new Pixel(-4,0), new Pixel(0,+4), new Pixel(0,-4),
+                new Pixel(+3,+3), new Pixel(+3,-3), new Pixel(-3,+3), new Pixel(-3,-3)
         )); // Deepslate tiles
 
         return blocks;
@@ -180,26 +180,30 @@ public class FlyingDungeonPiece extends StructurePiece {
     private static List<List<Pixel>> smallTowerLayer()
     {
         var blocks = new ArrayList<List<Pixel>>();
+        var endstone = new ArrayList<Pixel>();
 
-        blocks.add(Arrays.asList(
-            new Pixel(-2,-1), new Pixel(-2,+1), new Pixel(+2,-1), new Pixel(+2,+1),
-            new Pixel(-1,-2), new Pixel(+1,-2), new Pixel(-1,+2), new Pixel(+1,+2),
-            new Pixel(-1,-1), new Pixel(-1,+0), new Pixel(-1,+1), new Pixel(+0,-1),
-            new Pixel(+0,+0), new Pixel(+0,+1), new Pixel(+1,-1), new Pixel(+1,+0),
-            new Pixel(+1,+1)
-        )); // Stonebrick
+        for(int i = -4; i <= 4; i++)
+        {
+            for(int j = -4; j <= 4; j++)
+            {
+                if(Math.abs(i) + Math.abs(j) >= 7) continue;
+                if(Math.abs(i) + Math.abs(j) == 6 && i != j) continue;
+                endstone.add(new Pixel(i,j));
+            }
+        }
 
-        blocks.add(Arrays.asList(
-            new Pixel(+2, 0), new Pixel(-2, 0), new Pixel(0, +2), new Pixel(0, -2)
-        )); // Deepslate tiles
+        blocks.add(endstone);
+
+        blocks.add(Arrays.asList(new Pixel(+4, 0), new Pixel(-4, 0),
+                                 new Pixel(0, +4), new Pixel(0, -4)));
 
         return blocks;
     }
 
     /**
-     * Generates a flying island beneath the castle floor (cy - 1 downward).
+     * Generates a flying island beneath the fortress floor (cy - 1 downward).
      * Shape: the tower polygon is scaled per layer so the island silhouette
-     * mirrors the castle's star outline and tapers to a point at the bottom.
+     * mirrors the fortress's star outline and tapers to a point at the bottom.
      * An inner/outer polygon pair produces ragged edges; mixed block palette
      * gives a natural rocky look.  Fully deterministic — own seed derived from
      * center position so every chunk's postProcess call agrees.
@@ -209,16 +213,16 @@ public class FlyingDungeonPiece extends StructurePiece {
         long seed = (long) cx * 341873128712L + (long) cz * 132897987541L + 7919L;
         RandomSource rng = RandomSource.create(seed);
 
-        for (int dy = 1; dy <= Config.CASTLE_ISLAND_DEPTH.get(); dy++) {
-            double t = (double) dy / Config.CASTLE_ISLAND_DEPTH.get();
+        for (int dy = 1; dy <= Config.FORTRESS_ISLAND_DEPTH.get(); dy++) {
+            double t = (double) dy / Config.FORTRESS_ISLAND_DEPTH.get();
 
-            double scale = Config.CASTLE_ISLAND_SIZE.get() * Math.pow(1.0 - t, 1.25);
+            double scale = Config.FORTRESS_ISLAND_SIZE.get() * Math.pow(1.0 - t, 1.25);
             if (scale < 0.1) break;
 
             List<Pixel> outerFill = fillPolygon(scaledPolygon(towers, scale));
             Set<Pixel> innerSet  = new HashSet<>(fillPolygon(scaledPolygon(towers, scale * 0.82)));
 
-            double blockProbability = (double) (100 - Config.CASTLE_ISLAND_DECAY.get()) / 100.0f;
+            double blockProbability = (double) (100 - Config.FORTRESS_ISLAND_DECAY.get()) / 100.0f;
 
             for (Pixel p : outerFill) {
                 if (!innerSet.contains(p) && rng.nextFloat() > blockProbability) continue;
@@ -233,7 +237,7 @@ public class FlyingDungeonPiece extends StructurePiece {
         List<Pixel> out = new ArrayList<>(src.size());
         for (Pixel p : src)
             out.add(new Pixel((int) Math.round(p.x() * scale),
-                              (int) Math.round(p.z() * scale)));
+                    (int) Math.round(p.z() * scale)));
         return out;
     }
 
@@ -261,7 +265,7 @@ public class FlyingDungeonPiece extends StructurePiece {
 
         List<Pixel> towers = getTowers();
 
-        // — Flying island beneath the castle —
+        // — Flying island beneath the fortress —
         generateIsland(level, box, cx, cy, cz, towers);
 
         // — Floor: polygon interior with stone bricks —
@@ -289,12 +293,12 @@ public class FlyingDungeonPiece extends StructurePiece {
             }
 
             for (Pixel wp : drawLine(prev.x(), prev.z(), t.x(), t.z())) {
-                for (int dy = 0; dy <= Config.CASTLE_WALL_HEIGHT.get(); dy++) {
+                for (int dy = 0; dy <= Config.FORTRESS_WALL_HEIGHT.get(); dy++) {
                     BlockPos wallPos = new BlockPos(cx + wp.x(), cy + dy, cz + wp.z());
                     if (box.isInside(wallPos)) level.setBlock(wallPos, getStoneBrick(), 2);
                 }
 
-                for (int dy = 0; dy <= Config.CASTLE_WALL_HEIGHT.get() + 1; dy++) {
+                for (int dy = 0; dy <= Config.FORTRESS_WALL_HEIGHT.get() + 1; dy++) {
                     BlockPos innerPos = new BlockPos(cx + wp.x() + offX, cy + dy, cz + wp.z() + offZ);
                     if (box.isInside(innerPos)) level.setBlock(innerPos, getDeepslateBrick(), 2);
                 }
@@ -306,20 +310,20 @@ public class FlyingDungeonPiece extends StructurePiece {
 
         // Load small tower cap template once, place on every tower
         StructureTemplate smallTowerTop = new StructureTemplate();
-        try (InputStream is = FlyingDungeonPiece.class.getResourceAsStream("/data/skygrad/structures/castle_small_tower_top.nbt")) {
-            if (is == null) System.out.println("[Skygrad] castle_small_tower_top.nbt not found on classpath");
+        try (InputStream is = FlyingFortressPiece.class.getResourceAsStream("/data/skygrad/structures/fortress_small_tower_top.nbt")) {
+            if (is == null) System.out.println("[Skygrad] fortress_small_tower_top.nbt not found on classpath");
             else {
                 CompoundTag nbt = NbtIo.readCompressed(is, NbtAccounter.unlimitedHeap());
                 smallTowerTop.load(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.BLOCK), nbt);
             }
         } catch (IOException e) {
-            System.out.println("[Skygrad] Failed to load castle_small_tower_top.nbt: " + e);
+            System.out.println("[Skygrad] Failed to load fortress_small_tower_top.nbt: " + e);
             return;
         }
 
         // — Tower columns + cap —
         for (Pixel t : towers) {
-            for(int y = 0; y <= Config.CASTLE_TOWER_HEIGHT.get() + 1; y++) {
+            for(int y = 0; y <= Config.FORTRESS_TOWER_HEIGHT.get() + 1; y++) {
                 for (Pixel stonebrick : smallTowerLayer.get(0)) {
                     BlockPos pos = new BlockPos(cx + stonebrick.x() + t.x(), cy + y, cz + stonebrick.z() + t.z());
                     if (box.isInside(pos)) level.setBlock(pos, getStoneBrick(), 2);
@@ -332,19 +336,19 @@ public class FlyingDungeonPiece extends StructurePiece {
             }
 
             Vec3i size = smallTowerTop.getSize();
-            BlockPos origin = new BlockPos(cx + t.x() - size.getX() / 2, cy + Config.CASTLE_TOWER_HEIGHT.get() + 1, cz + t.z() - size.getZ() / 2);
+            BlockPos origin = new BlockPos(cx + t.x() - size.getX() / 2, cy + Config.FORTRESS_TOWER_HEIGHT.get() + 1, cz + t.z() - size.getZ() / 2);
             smallTowerTop.placeInWorld(level, origin, origin,
                     new StructurePlaceSettings().setBoundingBox(box), random, 2);
         }
 
         BlockPos heartPos = new BlockPos(cx, cy + 1, cz);
-        if (box.isInside(heartPos)) level.setBlock(heartPos, ModBlocks.ISLAND_HEART_BLOCK.get().defaultBlockState(), 2);
+        if (box.isInside(heartPos)) level.setBlock(heartPos, ModBlocks.FORTRESS_HEART_BLOCK.get().defaultBlockState(), 2);
 
         // Loot chest sitting directly on top of the heart, inside the central tower shaft.
         // createChest is the vanilla helper that places a CHEST, sets its block-entity loot
         // table, picks a sensible facing, and respects the box guard for chunk-by-chunk gen.
         BlockPos chestPos = new BlockPos(cx, cy + 2, cz);
-        this.createChest(level, box, random, chestPos, ModLootTables.FLYING_CASTLE_CHEST, null);
+        this.createChest(level, box, random, chestPos, ModLootTables.FLYING_FORTRESS_CHEST, null);
 
         var towerLayer = bigTowerLayer();
 
@@ -365,8 +369,8 @@ public class FlyingDungeonPiece extends StructurePiece {
 
         // Island tower cap: load .nbt directly from the mod classpath,
         // bypassing StructureTemplateManager which doesn't see mod datapacks at gen time.
-        try (InputStream is = FlyingDungeonPiece.class.getResourceAsStream("/data/skygrad/structures/castle_main_tower_top.nbt")) {
-            if (is == null) System.out.println("[Skygrad] castle_main_tower_top.nbt not found on classpath");
+        try (InputStream is = FlyingFortressPiece.class.getResourceAsStream("/data/skygrad/structures/fortress_main_tower_top.nbt")) {
+            if (is == null) System.out.println("[Skygrad] fortress_main_tower_top.nbt not found on classpath");
             else {
                 StructureTemplate template = new StructureTemplate();
                 CompoundTag nbt = NbtIo.readCompressed(is, NbtAccounter.unlimitedHeap());
@@ -378,7 +382,7 @@ public class FlyingDungeonPiece extends StructurePiece {
                         new StructurePlaceSettings().setBoundingBox(box), random, 2);
             }
         } catch (IOException e) {
-            System.out.println("[Skygrad] Failed to load castle_main_tower_top.nbt: " + e);
+            System.out.println("[Skygrad] Failed to load fortress_main_tower_top.nbt: " + e);
         }
     }
 }

@@ -18,4 +18,9 @@ public final class ModLootTables {
     public static final ResourceKey<LootTable> FLYING_CASTLE_CHEST = ResourceKey.create(
             Registries.LOOT_TABLE,
             ResourceLocation.fromNamespaceAndPath(Skygrad.MODID, "chests/flying_dungeon"));
+
+    /** Loot table for the chest sitting on top of the island heart. */
+    public static final ResourceKey<LootTable> FLYING_FORTRESS_CHEST = ResourceKey.create(
+            Registries.LOOT_TABLE,
+            ResourceLocation.fromNamespaceAndPath(Skygrad.MODID, "chests/flying_fortress"));
 }

@@ -1,0 +1,50 @@
+{
+  "type": "create:mixing",
+  "ingredients": [
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "item": "skygrad:cotton"
+    },
+    {
+      "tag": "createbigcannons:gunpowder"
+    },
+    {
+      "tag": "createbigcannons:gunpowder"
+    },
+    {
+      "tag": "createbigcannons:gunpowder"
+    },
+    {
+      "tag": "createbigcannons:gunpowder"
+    },
+    {
+      "item": "minecraft:flint"
+    },
+    {
+      "type": "neoforge:single",
+      "amount": 200,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "processing_time": 300,
+  "results": [
+    {
+      "id": "createbigcannons:guncotton",
+      "count": 6
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CGC",
+    "GRG",
+    "CGC"
+  ],
+  "key": {
+    "C": { "item": "create:cogwheel" },
+    "G": { "tag": "c:plates/gold" },
+    "R": { "item": "minecraft:redstone" }
+  },
+  "result": {
+    "id": "minecraft:clock"
+  }
+}

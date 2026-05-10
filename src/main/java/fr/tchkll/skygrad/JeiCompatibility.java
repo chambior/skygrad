@@ -43,10 +43,14 @@ public class JeiCompatibility implements IModPlugin {
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("tfmg:steel_shovel")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("tfmg:molten_steel")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("tfmg:molten_steel_bucket")));
+        itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("tfmg:copper_wire")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:steel_ingot")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:steel_block")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:steel_scrap")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:heavy_plate")));
+        itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_nugget")));
+        itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_ingot")));
+        itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_block")));
 
         for(var item : itemsToRemove)
         {
