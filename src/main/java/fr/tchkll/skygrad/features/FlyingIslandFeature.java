@@ -91,15 +91,15 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
 
                 int yMin = (int) Math.round(yMin1 - hm2Term + offsetSum) + 1;
                 int yMax = (int) Math.round(yMax1 + hm2Term + offsetSum);
-                int dirtMin = yMax - 3;
+                int dirtMin = Math.max(yMax - 3, yMin);
                 
                 for (int y = yMin;    y < dirtMin; y++)
-                    level.setBlock(new BlockPos(x, y, z), stone, 2);
+                    level.setBlock(new BlockPos(x, y, z), Blocks.STONE.defaultBlockState(), 2);
                 
                 for (int y = dirtMin; y < yMax;    y++)
-                    level.setBlock(new BlockPos(x, y, z), dirt, 2);
+                    level.setBlock(new BlockPos(x, y, z), Blocks.DIRT.defaultBlockState(), 2);
                     
-                level.setBlock(new BlockPos(x, yMax, z), grass, 2);
+                level.setBlock(new BlockPos(x, yMax, z), Blocks.GRASS_BLOCK.defaultBlockState(), 2);
 
                 level.setBlock(new BlockPos(x, yMin - 1, z), Blocks.STONE.defaultBlockState(), 2);
 
@@ -196,7 +196,7 @@ public class FlyingIslandFeature extends Feature<NoneFeatureConfiguration> {
         }
         if (biome.is(BiomeTags.IS_BADLANDS)) {
             if (random.nextFloat() < 0.3f)
-                level.setBlock(pos, Blocks.DEAD_BUSH.defaultBlockState(), 2);
+                level.setBlock(pos, Blocks.SHORT_GRASS.defaultBlockState(), 2);
             return;
         }
 

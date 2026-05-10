@@ -5,12 +5,14 @@ import fr.tchkll.skygrad.Config;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -119,15 +121,25 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
         var random = ctx.random();
         var seed   = level.getSeed();
 
+        BlockPos origin = ctx.origin();
+        int baseX = (origin.getX() >> 4) << 4;
+        int baseZ = (origin.getZ() >> 4) << 4;
+
         var noise1 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xDEADBEEFL));
         var noise2 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xCAFEBABEL));
         var noise3 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xDEDEBABAL));
         var noise4 = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xBABAFAFAL));
         var rivers = new RiverNoise(seed ^ 0xF1FA1ABBAFED5EEDL);
 
-        BlockPos origin = ctx.origin();
-        int baseX = (origin.getX() >> 4) << 4;
-        int baseZ = (origin.getZ() >> 4) << 4;
+        RandomSource rng = RandomSource.create(seed + 13L * baseX + 17L * baseZ);
+
+        var oreNoiseIron = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xBACBACBAL));
+        var oreNoiseCopper = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xACABACABL));
+        var oreNoiseZinc = new ImprovedNoise(new LegacyRandomSource(seed ^ 0xABCBACABL));
+
+        Block zincOre = BuiltInRegistries.BLOCK.get(
+                ResourceLocation.fromNamespaceAndPath("create", "zinc_ore")
+        );
 
         boolean generated = false;
 
@@ -139,6 +151,10 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
                 var cr = compute(x, z, noise1, noise2, noise3, noise4, rivers);
 
                 if(cr.nothing) continue;
+
+                var orIron = oreCompute(x, z, oreNoiseIron);
+                var orCopper = oreCompute(x, z, oreNoiseCopper);
+                var orZinc = oreCompute(x, z, oreNoiseZinc);
 
                 var yMax = cr.yMax;
                 var yMin = cr.yMin;
@@ -154,24 +170,31 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
 
                 for (int y = yMin; y <= yMax; y++) {
                     BlockState block;
-                    if(yMax < RIVER_HEIGHT + 1 && y >= yMax - 3 && !isBorder) block = Blocks.CLAY.defaultBlockState();
+                    if(yMax < RIVER_HEIGHT + 1 && y >= yMax - 3 && !isBorder)
+                    {
+                        if(rng.nextInt(10) < 2) block = Blocks.CLAY.defaultBlockState();
+                        else if(rng.nextInt(10) < 4) block = Blocks.GRAVEL.defaultBlockState();
+                        else block = Blocks.SAND.defaultBlockState();
+                    }
                     else if (y == yMax)             block = Blocks.GRASS_BLOCK.defaultBlockState();
                     else if (y >= yMax - 3)         block = Blocks.DIRT.defaultBlockState();
                     else                            block = Blocks.STONE.defaultBlockState();
                     level.setBlock(new BlockPos(x, y, z), block, 2);
                 }
 
-                if(yMax < RIVER_HEIGHT && !isBorder)
-                {
+                if(yMax < RIVER_HEIGHT - 1 && !isBorder) {
                     for(int y = yMax; y < RIVER_HEIGHT; y++)
                     {
                         level.setBlock(new BlockPos(x, y, z), Blocks.WATER.defaultBlockState(), 2);
                     }
+
+                    if((rng.nextInt() % 10) == 0) level.setBlock(new BlockPos(x, yMax, z), Blocks.SEAGRASS.defaultBlockState(), 2);
                 }
-                else
-                {
-                    decorateSurfaceWithLife(level, new BlockPos(x, yMax + 1, z), random, ctx.chunkGenerator());
-                }
+                else decorateSurfaceWithLife(level, new BlockPos(x, yMax + 1, z), random, ctx.chunkGenerator());
+
+                generateOre(level, rng, x, z, orIron, yMax, Blocks.IRON_ORE.defaultBlockState(), RIVER_HEIGHT);
+                generateOre(level, rng, x, z, orCopper, yMax, Blocks.COPPER_ORE.defaultBlockState(), RIVER_HEIGHT);
+                generateOre(level, rng, x, z, orZinc, yMax, zincOre.defaultBlockState(), RIVER_HEIGHT);
 
                 level.setBlock(new BlockPos(x, yMin - 1, z), Blocks.STONE.defaultBlockState(), 2);
 
@@ -180,6 +203,34 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
         }
 
         return generated;
+    }
+
+    private void generateOre(WorldGenLevel level, RandomSource rng, int x, int z,
+                             OreResult orIron, int yMax, BlockState block, int riverHeight) {
+        for(int y = yMax + orIron.yMin; y < yMax + orIron.yMax; y++)
+        {
+            if(rng.nextInt(10) < 2) level.setBlock(new BlockPos(x, y, z), Blocks.STONE.defaultBlockState(), 2);
+            else if(rng.nextInt(10) < 4) level.setBlock(new BlockPos(x, y, z), Blocks.ANDESITE.defaultBlockState(), 2);
+            else level.setBlock(new BlockPos(x, y, z), block, 2);
+        }
+    }
+
+    private record OreResult(int yMin, int yMax) {}
+
+    private OreResult oreCompute(int x, int z, ImprovedNoise oreNoise) {
+        double THRESHOLD = 0.65;
+        double MINIMUM_SIZE = 0.03;
+
+        double spike = oreNoise.noise(x / 10.0, 0, z / 10.0);
+
+        if(spike < MINIMUM_SIZE + THRESHOLD) return new OreResult(0, 0);
+
+        double proportion = (spike - THRESHOLD) / (1.0 - THRESHOLD);
+
+        int yMin = (int)(-3 - proportion * 3);
+        int yMax = (int)(proportion * 20);
+
+        return new OreResult(yMin, yMax);
     }
 
     // -------------------------------------------------------------------------
@@ -266,7 +317,7 @@ public class CentralFlyingIslandFeature extends Feature<NoneFeatureConfiguration
         }
         if (biome.is(BiomeTags.IS_BADLANDS)) {
             if (random.nextFloat() < 0.3f)
-                level.setBlock(pos, Blocks.DEAD_BUSH.defaultBlockState(), 2);
+                level.setBlock(pos, Blocks.SHORT_GRASS.defaultBlockState(), 2);
             return;
         }
 

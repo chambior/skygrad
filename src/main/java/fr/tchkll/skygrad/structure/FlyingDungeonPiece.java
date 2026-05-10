@@ -164,15 +164,15 @@ public class FlyingDungeonPiece extends StructurePiece {
         var blocks = new ArrayList<List<Pixel>>();
 
         blocks.add(Arrays.asList(
-                new Pixel(-2,-1), new Pixel(-2,+1), new Pixel(+2,-1), new Pixel(+2,+1),
-                new Pixel(-1,-2), new Pixel(+1,-2), new Pixel(-1,+2), new Pixel(+1,+2),
-                new Pixel(-1,-1), new Pixel(-1,+0), new Pixel(-1,+1), new Pixel(+0,-1),
-                new Pixel(+0,+0), new Pixel(+0,+1), new Pixel(+1,-1), new Pixel(+1,+0),
-                new Pixel(+1,+1)
+            new Pixel(-2,-1), new Pixel(-2,+1), new Pixel(+2,-1), new Pixel(+2,+1),
+            new Pixel(-1,-2), new Pixel(+1,-2), new Pixel(-1,+2), new Pixel(+1,+2),
+            new Pixel(-1,-1), new Pixel(-1,+0), new Pixel(-1,+1), new Pixel(+0,-1),
+            new Pixel(+0,+0), new Pixel(+0,+1), new Pixel(+1,-1), new Pixel(+1,+0),
+            new Pixel(+1,+1)
         )); // Stonebrick
 
         blocks.add(Arrays.asList(
-                new Pixel(+2, 0), new Pixel(-2, 0), new Pixel(0, +2), new Pixel(0, -2)
+            new Pixel(+2, 0), new Pixel(-2, 0), new Pixel(0, +2), new Pixel(0, -2)
         )); // Deepslate tiles
 
         return blocks;
