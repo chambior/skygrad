@@ -141,12 +141,12 @@ public class Config {
     public static final ModConfigSpec.IntValue FORTRESS_MINIMUM_TOWER_COUNT = BUILDER
             .comment("Fortress minimum tower count")
             .translation("skygrad.config.fortressMinimumTowerCount")
-            .defineInRange("fortressMinimumTowerCount", 18, 3, 100);
+            .defineInRange("fortressMinimumTowerCount", 12, 3, 100);
 
     public static final ModConfigSpec.IntValue FORTRESS_MAXIMUM_TOWER_COUNT = BUILDER
             .comment("Fortress maximum tower count")
             .translation("skygrad.config.fortressMaximumTowerCount")
-            .defineInRange("fortressMaximumTowerCount", 24, 3, 100);
+            .defineInRange("fortressMaximumTowerCount", 28, 3, 100);
 
     public static final ModConfigSpec.IntValue FORTRESS_ISLAND_DECAY = BUILDER
             .comment("Fortress island decay")

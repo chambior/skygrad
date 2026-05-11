@@ -88,7 +88,7 @@ public class FortressHeartBlockEntity extends BlockEntity {
 
         int modif = 0;
         double playerY = target.getY();
-        if(playerY < pos.getY() + 40 - 35) modif = -75;
+        if(playerY < pos.getY() + 40 - 25) modif = -85;
 
         BlockPos posCopy = new BlockPos(pos.getX(), pos.getY() + 40 + modif, pos.getZ());
 

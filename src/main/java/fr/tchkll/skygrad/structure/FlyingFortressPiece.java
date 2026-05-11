@@ -187,7 +187,7 @@ public class FlyingFortressPiece extends StructurePiece {
             for(int j = -4; j <= 4; j++)
             {
                 if(Math.abs(i) + Math.abs(j) >= 7) continue;
-                if(Math.abs(i) + Math.abs(j) == 6 && i != j) continue;
+                if(Math.abs(i) + Math.abs(j) == 6 && Math.abs(i) != Math.abs(j)) continue;
                 endstone.add(new Pixel(i,j));
             }
         }
