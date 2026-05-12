@@ -48,6 +48,7 @@ public class Skygrad {
         ModCreativeTab.register(modEventBus);
         ModStructures.register(modEventBus);
         ModStructurePieceTypes.register(modEventBus);
+        ModPotions.register(modEventBus);
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
