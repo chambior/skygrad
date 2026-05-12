@@ -3,9 +3,6 @@
   "accept_mirrored": false,
   "category": "misc",
   "key": {
-    "L": {
-      "item": "simulated:laser_pointer"
-    },
     "B": {
       "item": "tfmg:circuit_board"
     },
@@ -16,14 +13,14 @@
       "item": "simulated:red_portable_engine"
     },
     "Y": {
-      "item": "minecraft:end_stone"
+      "item": "minecraft:elytra"
     },
     "S": {
       "item": "skygrad:levitite_sheet"
     }
   },
   "pattern": [
-    " SLS ",
+    " SSS ",
     "SSMSS",
     "SEYES",
     "SSBSS",

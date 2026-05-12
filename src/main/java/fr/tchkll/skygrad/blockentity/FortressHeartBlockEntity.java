@@ -129,12 +129,10 @@ public class FortressHeartBlockEntity extends BlockEntity {
                 new net.minecraft.world.phys.AABB(pos).inflate(TNT_RADIUS)
         );
 
-        Vec3 heartCenter = Vec3.atCenterOf(pos);
-
         for (Player player : players) {
-            //if (player.isCreative() || player.isSpectator()) continue;
+            if (player.isSpectator()) continue;
 
-            //if(Math.random() < 0.9) continue;
+            if(Math.random() < 0.9) continue;
 
             fireTnt(level, pos, player);
         }
