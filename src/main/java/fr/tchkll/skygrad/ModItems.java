@@ -1,6 +1,7 @@
 package fr.tchkll.skygrad;
 
 import fr.tchkll.skygrad.items.FlyingCastleMapItem;
+import fr.tchkll.skygrad.items.FlyingFortressMapItem;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -19,6 +20,10 @@ public class ModItems {
     public static final DeferredItem<FlyingCastleMapItem> FLYING_CASTLE_MAP =
         ITEMS.register("flying_castle_map",
             () -> new FlyingCastleMapItem(new Item.Properties().stacksTo(16)));
+
+    public static final DeferredItem<FlyingFortressMapItem> FLYING_FORTRESS_MAP =
+        ITEMS.register("flying_fortress_map",
+            () -> new FlyingFortressMapItem(new Item.Properties().stacksTo(16)));
 
     public static final DeferredItem<Item> LEVITITE_INGOT =
         ITEMS.register("levitite_ingot",

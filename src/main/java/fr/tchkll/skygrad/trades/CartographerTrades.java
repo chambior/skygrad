@@ -34,6 +34,14 @@ public class CartographerTrades {
                 0.05F
         ));
 
+        trades.get(1).add((trader, random) -> new MerchantOffer(
+                new ItemCost(Items.EMERALD, 5),
+                new ItemStack(ModItems.FLYING_FORTRESS_MAP.get()),
+                12,
+                2,
+                0.05F
+        ));
+
         // Remove existing trades if wanted
         trades.get(1).removeIf(trade ->
                 trade instanceof VillagerTrades.EmeraldForItems
