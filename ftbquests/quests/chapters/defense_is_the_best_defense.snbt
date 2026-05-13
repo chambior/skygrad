@@ -1,0 +1,346 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "defense_is_the_best_defense"
+	group: ""
+	icon: {
+		id: "createqol:shadow_radiance"
+	}
+	id: "4E09E429CB25DEEC"
+	images: [
+		{
+			height: 4.0d
+			image: "createqol:item/shadow_radiance"
+			rotation: 0.0d
+			width: 4.0d
+			x: 1.0d
+			y: 0.0d
+		}
+		{
+			height: 4.0d
+			image: "create:item/shadow_steel"
+			rotation: 0.0d
+			width: 4.0d
+			x: -4.0d
+			y: 3.5d
+		}
+		{
+			height: 4.0d
+			image: "create:item/refined_radiance"
+			rotation: 0.0d
+			width: 4.0d
+			x: -4.0d
+			y: -3.5d
+		}
+	]
+	order_index: 3
+	quest_links: [ ]
+	quests: [
+		{
+			id: "0E53E98FBB300B0A"
+			tasks: [{
+				id: "5156E95878DD7A93"
+				item: { count: 1, id: "create:chromatic_compound" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["0E53E98FBB300B0A"]
+			id: "7005D387A9C9186D"
+			tasks: [{
+				id: "227DB65D164172A9"
+				item: { count: 1, id: "create:refined_radiance" }
+				type: "item"
+			}]
+			x: -7.5d
+			y: -1.0d
+		}
+		{
+			dependencies: ["0E53E98FBB300B0A"]
+			id: "0F00FFE224823C51"
+			tasks: [{
+				id: "61560C618D9CDEC8"
+				item: { count: 1, id: "create:shadow_steel" }
+				type: "item"
+			}]
+			x: -7.5d
+			y: 1.0d
+		}
+		{
+			dependencies: [
+				"7005D387A9C9186D"
+				"0F00FFE224823C51"
+			]
+			id: "4D705103C0E1439F"
+			tasks: [{
+				id: "057501C7A364561E"
+				item: { count: 1, id: "createqol:shadow_radiance" }
+				type: "item"
+			}]
+			x: -5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["4D705103C0E1439F"]
+			id: "616140F8366F71D6"
+			tasks: [{
+				id: "45004B2EDDE643E4"
+				item: { count: 1, id: "createqol:shadow_radiance_block" }
+				type: "item"
+			}]
+			x: -3.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "67B7F4B88F90B487"
+			tasks: [{
+				id: "5C6E105B0C523912"
+				item: { count: 1, id: "createqol:shadow_radiance_sword" }
+				type: "item"
+			}]
+			x: -2.5d
+			y: 2.0d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "301FC031D0276698"
+			tasks: [{
+				id: "2AA2C217A7BBDA2C"
+				item: { count: 1, id: "createqol:shadow_radiance_pickaxe" }
+				type: "item"
+			}]
+			x: -1.5d
+			y: 1.5d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "30AE03D7DED26F9D"
+			tasks: [{
+				id: "31CFD51F80B1F054"
+				item: { count: 1, id: "createqol:shadow_radiance_axe" }
+				type: "item"
+			}]
+			x: -1.0d
+			y: 0.5d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "6A94F56342801F05"
+			tasks: [{
+				id: "306C3778B3D28608"
+				item: { count: 1, id: "createqol:shadow_radiance_shovel" }
+				type: "item"
+			}]
+			x: -1.0d
+			y: -0.5d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "3BDCDCF41C864EDC"
+			tasks: [{
+				id: "4308B823AC48F8BF"
+				item: { count: 1, id: "createqol:shadow_radiance_hoe" }
+				type: "item"
+			}]
+			x: -1.5d
+			y: -1.5d
+		}
+		{
+			dependencies: ["616140F8366F71D6"]
+			id: "4D334C4F9B4C6BFA"
+			tasks: [
+				{
+					id: "735C0BBE31ADF4F9"
+					item: { count: 1, id: "createqol:shadow_radiance_helmet" }
+					type: "item"
+				}
+				{
+					id: "21CC1E4682233EFF"
+					item: { components: { "create:banktank_air": 900 }, count: 1, id: "createqol:shadow_radiance_chestplate" }
+					type: "item"
+				}
+				{
+					id: "06E44ACF5F35652F"
+					item: { count: 1, id: "createqol:shadow_radiance_leggings" }
+					type: "item"
+				}
+				{
+					id: "3EAB80E7F17EC90F"
+					item: { count: 1, id: "createqol:shadow_radiance_boots" }
+					type: "item"
+				}
+			]
+			x: -2.5d
+			y: -2.0d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "3D3D8E384FA8EC63"
+			tasks: [{
+				id: "73E6F6658007B04E"
+				item: { count: 1, id: "createqol:shadow_steel_sword" }
+				type: "item"
+			}]
+			x: -9.5d
+			y: 2.0d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "1116E774E0E0832C"
+			tasks: [{
+				id: "4A2207385AAA87E6"
+				item: { count: 1, id: "createqol:shadow_steel_pickaxe" }
+				type: "item"
+			}]
+			x: -9.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "66ED78EE9F50F0DB"
+			tasks: [{
+				id: "5BB653AB86857EF5"
+				item: { count: 1, id: "createqol:shadow_steel_axe" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: 3.5d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "2CDD565C55F68C88"
+			tasks: [{
+				id: "340DCCB8849E8CAB"
+				item: { count: 1, id: "createqol:shadow_steel_shovel" }
+				type: "item"
+			}]
+			x: -7.0d
+			y: 3.5d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "4B4607A6455D51EB"
+			tasks: [{
+				id: "4A543F01188BBF0A"
+				item: { count: 1, id: "createqol:shadow_steel_hoe" }
+				type: "item"
+			}]
+			x: -6.0d
+			y: 3.0d
+		}
+		{
+			dependencies: ["0F00FFE224823C51"]
+			id: "1D0665FD4DD31738"
+			tasks: [
+				{
+					id: "17DB822EE421E790"
+					item: { count: 1, id: "createqol:shadow_steel_helmet" }
+					type: "item"
+				}
+				{
+					id: "63FD666891936B96"
+					item: { components: { "create:banktank_air": 900 }, count: 1, id: "createqol:shadow_steel_chestplate" }
+					type: "item"
+				}
+				{
+					id: "55233F3EE9029B38"
+					item: { count: 1, id: "createqol:shadow_steel_leggings" }
+					type: "item"
+				}
+				{
+					id: "7191FD88AFDAF5D6"
+					item: { count: 1, id: "createqol:shadow_steel_boots" }
+					type: "item"
+				}
+			]
+			x: -5.5d
+			y: 2.0d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "27B28B376D00DDAF"
+			tasks: [
+				{
+					id: "1E1892407B437040"
+					item: { count: 1, id: "createqol:refined_radiance_helmet" }
+					type: "item"
+				}
+				{
+					id: "3379C4E226CF69BA"
+					item: { components: { "create:banktank_air": 900 }, count: 1, id: "createqol:refined_radiance_chestplate" }
+					type: "item"
+				}
+				{
+					id: "0A2FFF621901A822"
+					item: { count: 1, id: "createqol:refined_radiance_leggings" }
+					type: "item"
+				}
+				{
+					id: "66141029E772954E"
+					item: { count: 1, id: "createqol:refined_radiance_boots" }
+					type: "item"
+				}
+			]
+			x: -5.5d
+			y: -2.0d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "03FFFBBCA0B834E9"
+			tasks: [{
+				id: "1DBE5AED90591702"
+				item: { count: 1, id: "createqol:refined_radiance_hoe" }
+				type: "item"
+			}]
+			x: -6.0d
+			y: -3.0d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "0C37046372A3A483"
+			tasks: [{
+				id: "0AB6F7CBF10B4E36"
+				item: { count: 1, id: "createqol:refined_radiance_shovel" }
+				type: "item"
+			}]
+			x: -7.0d
+			y: -3.5d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "7919997FFA896DAC"
+			tasks: [{
+				id: "202DD8F242749B42"
+				item: { count: 1, id: "createqol:refined_radiance_sword" }
+				type: "item"
+			}]
+			x: -9.5d
+			y: -2.0d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "2A7AB2873BE47B6C"
+			tasks: [{
+				id: "047BC3D1792C7598"
+				item: { count: 1, id: "createqol:refined_radiance_axe" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: -3.5d
+		}
+		{
+			dependencies: ["7005D387A9C9186D"]
+			id: "2454AF4C4F342FBF"
+			tasks: [{
+				id: "0E360989DF5B4C32"
+				item: { count: 1, id: "createqol:refined_radiance_pickaxe" }
+				type: "item"
+			}]
+			x: -9.0d
+			y: -3.0d
+		}
+	]
+}

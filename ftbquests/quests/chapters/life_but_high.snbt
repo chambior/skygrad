@@ -3,6 +3,9 @@
 	default_quest_shape: ""
 	filename: "life_but_high"
 	group: ""
+	icon: {
+		id: "skygrad:turtle_apple"
+	}
 	id: "556126D3FBE7C84A"
 	order_index: 0
 	quest_links: [ ]
@@ -24,7 +27,7 @@
 				item: { count: 1, id: "skygrad:cotton_seeds" }
 				type: "item"
 			}]
-			x: -10.0d
+			x: -9.0d
 			y: 5.0d
 		}
 		{
@@ -60,8 +63,8 @@
 				item: { count: 1, id: "minecraft:copper_ingot" }
 				type: "item"
 			}]
-			x: -7.5d
-			y: 3.0d
+			x: -10.0d
+			y: 6.0d
 		}
 		{
 			dependencies: ["29D04595DEF3D44B"]
@@ -82,7 +85,7 @@
 				item: { count: 1, id: "minecraft:iron_ingot" }
 				type: "item"
 			}]
-			x: -7.5d
+			x: -10.0d
 			y: -3.0d
 		}
 		{
@@ -93,7 +96,7 @@
 				item: { count: 1, id: "skygrad:cotton" }
 				type: "item"
 			}]
-			x: -7.5d
+			x: -7.0d
 			y: 5.0d
 		}
 		{
@@ -206,7 +209,7 @@
 				type: "item"
 			}]
 			x: 2.5d
-			y: 5.0d
+			y: 6.0d
 		}
 		{
 			dependencies: [
@@ -220,7 +223,7 @@
 				type: "item"
 			}]
 			x: -2.0d
-			y: 6.5d
+			y: 6.0d
 		}
 		{
 			id: "550065F553E6E122"
@@ -229,7 +232,7 @@
 				item: { count: 1, id: "minecraft:charcoal" }
 				type: "item"
 			}]
-			x: -5.0d
+			x: -2.0d
 			y: 7.0d
 		}
 		{
@@ -307,7 +310,7 @@
 					type: "item"
 				}
 			]
-			x: -3.5d
+			x: 2.5d
 			y: -3.0d
 		}
 		{
@@ -351,8 +354,8 @@
 				item: { count: 1, id: "create:blaze_burner" }
 				type: "item"
 			}]
-			x: 5.0d
-			y: 0.0d
+			x: 4.0d
+			y: -1.5d
 		}
 		{
 			dependencies: ["69654D17198E1C98"]
@@ -364,6 +367,17 @@
 			}]
 			x: 1.5d
 			y: 3.5d
+		}
+		{
+			dependencies: ["7D54532E3D5C560F"]
+			id: "3FB3A95A592934DD"
+			tasks: [{
+				id: "2AAC82663ED59B6C"
+				item: { count: 1, id: "minecraft:redstone" }
+				type: "item"
+			}]
+			x: -5.0d
+			y: 7.0d
 		}
 	]
 }

@@ -4,6 +4,14 @@
 	filename: "the_promised_land"
 	group: ""
 	id: "4A51E125987A62FD"
+	images: [{
+		height: 4.0d
+		image: "minecolonies:item/supplycampdeployer"
+		rotation: 0.0d
+		width: 4.0d
+		x: -1.5d
+		y: 0.0d
+	}]
 	order_index: 2
 	quest_links: [ ]
 	quests: [

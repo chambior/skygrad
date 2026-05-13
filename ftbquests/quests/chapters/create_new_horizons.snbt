@@ -3,7 +3,28 @@
 	default_quest_shape: ""
 	filename: "create_new_horizons"
 	group: ""
+	icon: {
+		id: "skygrad:sky_engine"
+	}
 	id: "403B542E6A9F9B0B"
+	images: [
+		{
+			height: 3.0d
+			image: "skygrad:item/levitite_ingot"
+			rotation: 0.0d
+			width: 3.0d
+			x: -0.5d
+			y: 2.5d
+		}
+		{
+			height: 3.0d
+			image: "tfmg:item/circuit_board"
+			rotation: 0.0d
+			width: 3.0d
+			x: -0.5d
+			y: -2.5d
+		}
+	]
 	order_index: 1
 	quest_links: [ ]
 	quests: [
@@ -14,7 +35,7 @@
 				item: { count: 1, id: "create:brass_ingot" }
 				type: "item"
 			}]
-			x: -10.0d
+			x: -8.0d
 			y: 0.0d
 		}
 		{
@@ -138,7 +159,7 @@
 				item: { count: 1, id: "minecraft:diamond" }
 				type: "item"
 			}]
-			x: -11.5d
+			x: -11.0d
 			y: -1.0d
 		}
 		{
@@ -149,8 +170,8 @@
 				item: { count: 1, id: "skygrad:builders_block" }
 				type: "item"
 			}]
-			x: -11.5d
-			y: 1.0d
+			x: -9.0d
+			y: -1.0d
 		}
 		{
 			dependencies: [
@@ -202,6 +223,38 @@
 			}]
 			x: 1.0d
 			y: 0.0d
+		}
+		{
+			id: "334D98E30B342DE5"
+			tasks: [{
+				id: "603018CB13ACAFAE"
+				item: { count: 1, id: "minecraft:turtle_scute" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["334D98E30B342DE5"]
+			id: "258C4EEF3DF23204"
+			tasks: [{
+				id: "619BAD2E47D7420B"
+				item: { count: 1, id: "skygrad:turtle_apple" }
+				type: "item"
+			}]
+			x: -11.0d
+			y: 1.0d
+		}
+		{
+			dependencies: ["258C4EEF3DF23204"]
+			id: "774F0191DD0438D7"
+			tasks: [{
+				id: "24B82AF34504B018"
+				item: { components: { "minecraft:potion_contents": { potion: "skygrad:turtle_regeneration" } }, count: 1, id: "minecraft:potion" }
+				type: "item"
+			}]
+			x: -9.0d
+			y: 1.0d
 		}
 	]
 }
