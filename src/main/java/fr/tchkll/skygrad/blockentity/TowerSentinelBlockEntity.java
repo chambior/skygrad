@@ -1,6 +1,6 @@
 package fr.tchkll.skygrad.blockentity;
 
-import fr.tchkll.skygrad.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;

@@ -1,5 +1,6 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.registration;
 
+import fr.tchkll.skygrad.Skygrad;
 import fr.tchkll.skygrad.items.FlyingCastleMapItem;
 import fr.tchkll.skygrad.items.FlyingFortressMapItem;
 import net.minecraft.world.effect.MobEffectInstance;

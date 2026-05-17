@@ -1,5 +1,6 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.registration;
 
+import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;

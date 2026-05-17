@@ -1,6 +1,6 @@
 package fr.tchkll.skygrad.block;
 
-import fr.tchkll.skygrad.ModItems;
+import fr.tchkll.skygrad.registration.ModItems;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.CropBlock;
 import org.jetbrains.annotations.NotNull;

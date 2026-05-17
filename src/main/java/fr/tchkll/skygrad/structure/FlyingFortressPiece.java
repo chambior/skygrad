@@ -1,9 +1,9 @@
 package fr.tchkll.skygrad.structure;
 
 import fr.tchkll.skygrad.Config;
-import fr.tchkll.skygrad.ModBlocks;
-import fr.tchkll.skygrad.ModLootTables;
-import fr.tchkll.skygrad.ModStructurePieceTypes;
+import fr.tchkll.skygrad.registration.ModBlocks;
+import fr.tchkll.skygrad.registration.ModLootTables;
+import fr.tchkll.skygrad.registration.ModStructurePieceTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.nbt.CompoundTag;

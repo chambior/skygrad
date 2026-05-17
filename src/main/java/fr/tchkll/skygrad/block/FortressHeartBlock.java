@@ -1,9 +1,8 @@
 package fr.tchkll.skygrad.block;
 
 import com.mojang.serialization.MapCodec;
-import fr.tchkll.skygrad.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
 import fr.tchkll.skygrad.blockentity.FortressHeartBlockEntity;
-import fr.tchkll.skygrad.blockentity.IslandHeartBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;

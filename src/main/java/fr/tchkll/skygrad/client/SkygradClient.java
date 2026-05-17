@@ -1,7 +1,7 @@
 package fr.tchkll.skygrad.client;
 
 import dev.simulated_team.simulated.content.blocks.portable_engine.PortableEngineRenderer;
-import fr.tchkll.skygrad.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
 import fr.tchkll.skygrad.Skygrad;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

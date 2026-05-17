@@ -1,5 +1,6 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.registration;
 
+import fr.tchkll.skygrad.Skygrad;
 import fr.tchkll.skygrad.block.*;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;

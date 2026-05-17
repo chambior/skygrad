@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad;
 
+import fr.tchkll.skygrad.registration.ModBlockEntities;
 import fr.tchkll.skygrad.renderer.TowerSentinelRenderer;
 import net.minecraft.client.Minecraft;
 import net.neoforged.api.distmarker.Dist;

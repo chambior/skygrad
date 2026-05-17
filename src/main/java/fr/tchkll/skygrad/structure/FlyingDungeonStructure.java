@@ -1,7 +1,7 @@
 package fr.tchkll.skygrad.structure;
 
 import com.mojang.serialization.MapCodec;
-import fr.tchkll.skygrad.ModStructures;
+import fr.tchkll.skygrad.registration.ModStructures;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.levelgen.structure.Structure;

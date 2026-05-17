@@ -2,7 +2,7 @@ package fr.tchkll.skygrad.block;
 
 import dev.simulated_team.simulated.content.blocks.portable_engine.PortableEngineBlock;
 import dev.simulated_team.simulated.content.blocks.portable_engine.PortableEngineBlockEntity;
-import fr.tchkll.skygrad.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
 import fr.tchkll.skygrad.blockentity.SkyEngineBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.DyeColor;

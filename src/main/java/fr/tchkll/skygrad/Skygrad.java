@@ -1,5 +1,6 @@
 package fr.tchkll.skygrad;
 
+import fr.tchkll.skygrad.registration.*;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;

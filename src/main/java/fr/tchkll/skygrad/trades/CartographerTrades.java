@@ -1,6 +1,6 @@
 package fr.tchkll.skygrad.trades;
 
-import fr.tchkll.skygrad.ModItems;
+import fr.tchkll.skygrad.registration.ModItems;
 import fr.tchkll.skygrad.Skygrad;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.npc.VillagerProfession;

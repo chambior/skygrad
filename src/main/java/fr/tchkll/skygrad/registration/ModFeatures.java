@@ -1,5 +1,6 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.registration;
 
+import fr.tchkll.skygrad.Skygrad;
 import fr.tchkll.skygrad.features.CentralFlyingIslandFeature;
 import fr.tchkll.skygrad.features.FlyingIslandFeature;
 import net.minecraft.core.registries.BuiltInRegistries;

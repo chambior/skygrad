@@ -1,5 +1,6 @@
-package fr.tchkll.skygrad;
+package fr.tchkll.skygrad.registration;
 
+import fr.tchkll.skygrad.Skygrad;
 import fr.tchkll.skygrad.structure.FlyingDungeonStructure;
 import fr.tchkll.skygrad.structure.FlyingFortressStructure;
 import net.minecraft.core.registries.BuiltInRegistries;

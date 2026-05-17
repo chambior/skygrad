@@ -1,6 +1,6 @@
 package fr.tchkll.skygrad.block;
 
-import fr.tchkll.skygrad.ModBlocks;
+import fr.tchkll.skygrad.registration.ModBlocks;
 import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

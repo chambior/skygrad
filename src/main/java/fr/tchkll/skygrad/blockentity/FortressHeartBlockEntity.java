@@ -1,9 +1,8 @@
 package fr.tchkll.skygrad.blockentity;
 
 import fr.tchkll.skygrad.Config;
-import fr.tchkll.skygrad.ModBlockEntities;
-import fr.tchkll.skygrad.ModBlocks;
-import fr.tchkll.skygrad.structure.FlyingDungeonPiece;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlocks;
 import fr.tchkll.skygrad.structure.FlyingFortressPiece;
 import fr.tchkll.skygrad.utils.algo.Pixel;
 import net.minecraft.core.BlockPos;
@@ -14,7 +13,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;

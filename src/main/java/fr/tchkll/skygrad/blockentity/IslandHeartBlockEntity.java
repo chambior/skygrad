@@ -1,8 +1,8 @@
 package fr.tchkll.skygrad.blockentity;
 
 import fr.tchkll.skygrad.Config;
-import fr.tchkll.skygrad.ModBlockEntities;
-import fr.tchkll.skygrad.ModBlocks;
+import fr.tchkll.skygrad.registration.ModBlockEntities;
+import fr.tchkll.skygrad.registration.ModBlocks;
 import fr.tchkll.skygrad.structure.FlyingDungeonPiece;
 import fr.tchkll.skygrad.utils.algo.Pixel;
 import net.minecraft.core.BlockPos;
