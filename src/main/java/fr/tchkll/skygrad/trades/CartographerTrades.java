@@ -25,7 +25,6 @@ public class CartographerTrades {
 
         Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = event.getTrades();
 
-        // Level 1 trades
         trades.get(1).add((trader, random) -> new MerchantOffer(
                 new ItemCost(Items.EMERALD, 5),
                 new ItemStack(ModItems.FLYING_CASTLE_MAP.get()),
@@ -34,7 +33,7 @@ public class CartographerTrades {
                 0.05F
         ));
 
-        trades.get(1).add((trader, random) -> new MerchantOffer(
+        trades.get(3).add((trader, random) -> new MerchantOffer(
                 new ItemCost(Items.EMERALD, 5),
                 new ItemStack(ModItems.FLYING_FORTRESS_MAP.get()),
                 12,
