@@ -1,0 +1,260 @@
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "create_new_horizons"
+	group: ""
+	icon: {
+		id: "skygrad:sky_engine"
+	}
+	id: "403B542E6A9F9B0B"
+	images: [
+		{
+			height: 3.0d
+			image: "skygrad:item/levitite_ingot"
+			rotation: 0.0d
+			width: 3.0d
+			x: -0.5d
+			y: 2.5d
+		}
+		{
+			height: 3.0d
+			image: "tfmg:item/circuit_board"
+			rotation: 0.0d
+			width: 3.0d
+			x: -0.5d
+			y: -2.5d
+		}
+	]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			id: "4EDDFDC9F5DBD467"
+			tasks: [{
+				id: "3A5BED9374077A03"
+				item: { count: 1, id: "create:brass_ingot" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: 0.0d
+		}
+		{
+			id: "607715B445225C8C"
+			tasks: [{
+				id: "51E507953B098EA6"
+				item: { count: 1, id: "create_ironworks:steel_ingot" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: -2.5d
+		}
+		{
+			id: "58655371D051A61E"
+			tasks: [{
+				id: "339E678F0EEE8BF9"
+				item: { count: 1, id: "tfmg:circuit_board" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: -4.5d
+		}
+		{
+			dependencies: ["607715B445225C8C"]
+			id: "3BD2CFF6034904DB"
+			tasks: [{
+				id: "59EE0365BBB6ED7A"
+				item: { count: 1, id: "tfmg:steel_mechanism" }
+				type: "item"
+			}]
+			x: -6.0d
+			y: -2.5d
+		}
+		{
+			id: "21DA48D569E715B6"
+			tasks: [{
+				id: "552E6B0BA1775396"
+				item: { count: 1, id: "skygrad:levitite_ingot" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["21DA48D569E715B6"]
+			id: "459A53949793F7DF"
+			tasks: [{
+				id: "6C4F4F3C42043DAA"
+				item: { count: 1, id: "minecraft:ender_eye" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["459A53949793F7DF"]
+			id: "42AF4E59D4A6DDC9"
+			tasks: [{
+				id: "318E21E875FD6DD6"
+				item: { count: 1, id: "minecraft:end_stone" }
+				type: "item"
+			}]
+			x: -6.0d
+			y: 2.5d
+		}
+		{
+			dependencies: [
+				"72214F8C29D4D490"
+				"3BD2CFF6034904DB"
+				"58655371D051A61E"
+			]
+			id: "181B1A3756E3FB1C"
+			tasks: [{
+				id: "4A52905C1CCEAC45"
+				item: { count: 1, id: "skygrad:sky_engine" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["42AF4E59D4A6DDC9"]
+			id: "72214F8C29D4D490"
+			tasks: [{
+				id: "4768093193EAE30A"
+				item: { count: 1, id: "minecraft:elytra" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: 2.5d
+		}
+		{
+			dependencies: [
+				"4EDDFDC9F5DBD467"
+				"607715B445225C8C"
+			]
+			id: "4C654E873AC1CCD4"
+			tasks: [{
+				id: "67AFEE96BF4D7F26"
+				item: { count: 1, id: "create:precision_mechanism" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: -1.0d
+		}
+		{
+			dependencies: ["4EDDFDC9F5DBD467"]
+			id: "486A6DFE2A6D2867"
+			tasks: [{
+				id: "34AB8055FA1DFD96"
+				item: { count: 1, id: "simulated:gyroscopic_mechanism" }
+				type: "item"
+			}]
+			x: -8.0d
+			y: 1.0d
+		}
+		{
+			id: "7047D8E17F915A13"
+			tasks: [{
+				id: "27DBCA3B73CEBC69"
+				item: { count: 1, id: "minecraft:diamond" }
+				type: "item"
+			}]
+			x: -11.0d
+			y: -1.0d
+		}
+		{
+			dependencies: ["7047D8E17F915A13"]
+			id: "7551D3219CE06CA0"
+			tasks: [{
+				id: "1F392D178E098CD5"
+				item: { count: 1, id: "skygrad:builders_block" }
+				type: "item"
+			}]
+			x: -9.0d
+			y: -1.0d
+		}
+		{
+			dependencies: [
+				"42AF4E59D4A6DDC9"
+				"4C654E873AC1CCD4"
+				"3BD2CFF6034904DB"
+				"58655371D051A61E"
+				"486A6DFE2A6D2867"
+				"7BFA45D6FC882C94"
+			]
+			id: "2F7A03DAF4DD91A4"
+			tasks: [{
+				id: "46A2D794364097C7"
+				item: { count: 1, id: "minecraft:wither_skeleton_skull" }
+				type: "item"
+			}]
+			x: -2.0d
+			y: 0.0d
+		}
+		{
+			id: "7BFA45D6FC882C94"
+			tasks: [{
+				id: "581F52BE353A9EB8"
+				item: { count: 1, id: "aeronautics:levitite" }
+				type: "item"
+			}]
+			x: -4.0d
+			y: 4.5d
+		}
+		{
+			dependencies: ["2F7A03DAF4DD91A4"]
+			id: "25BCAFC8F0F1129A"
+			tasks: [{
+				id: "63E3572B59A31E4C"
+				item: { count: 1, id: "minecraft:nether_star" }
+				type: "item"
+			}]
+			x: -0.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["25BCAFC8F0F1129A"]
+			id: "1C9D8A9BEE82A9F1"
+			tasks: [{
+				id: "3ABD5EF303AF6E5A"
+				item: { count: 1, id: "minecraft:elytra" }
+				tags: ["mechanical"]
+				type: "item"
+			}]
+			x: 1.0d
+			y: 0.0d
+		}
+		{
+			id: "334D98E30B342DE5"
+			tasks: [{
+				id: "603018CB13ACAFAE"
+				item: { count: 1, id: "minecraft:turtle_scute" }
+				type: "item"
+			}]
+			x: -10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["334D98E30B342DE5"]
+			id: "258C4EEF3DF23204"
+			tasks: [{
+				id: "619BAD2E47D7420B"
+				item: { count: 1, id: "skygrad:turtle_apple" }
+				type: "item"
+			}]
+			x: -11.0d
+			y: 1.0d
+		}
+		{
+			dependencies: ["258C4EEF3DF23204"]
+			id: "774F0191DD0438D7"
+			tasks: [{
+				id: "24B82AF34504B018"
+				item: { components: { "minecraft:potion_contents": { potion: "skygrad:turtle_regeneration" } }, count: 1, id: "minecraft:potion" }
+				type: "item"
+			}]
+			x: -9.0d
+			y: 1.0d
+		}
+	]
+}
