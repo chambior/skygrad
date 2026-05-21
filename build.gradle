@@ -194,6 +194,52 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
+// --- Modrinth modpack packaging ---------------------------------------------
+// Refreshes overrides/mods/skygrad-*.jar with the freshly built mod jar, then
+// zips modpack/ into build/modpack/<mod_id>-<version>.mrpack.
+//
+// Usage:  ./gradlew packageModpack
+def modpackDir   = file('modpack')
+def mrpackOutDir = layout.buildDirectory.dir('modpack')
+def mrpackName   = "${mod_id}-${mod_version}.mrpack"
+
+def modpackModsDir = file("$modpackDir/overrides/mods")
+
+tasks.register('refreshModpackSkygradJar', Copy) {
+    group = 'modpack'
+    description = 'Copies the freshly built Skygrad jar into modpack/overrides/mods/.'
+    dependsOn tasks.named('jar')
+    from(tasks.named('jar'))
+    into modpackModsDir
+    doFirst {
+        // Drop any older skygrad-*.jar so we never ship two copies.
+        def dir = modpackModsDir
+        def existing = dir.listFiles()
+        if (existing != null) {
+            existing.findAll { it.name.startsWith('skygrad-') && it.name.endsWith('.jar') }
+                    .each { it.delete() }
+        }
+    }
+}
+
+tasks.register('packageModpack', Zip) {
+    group = 'modpack'
+    description = 'Builds the mod and packages modpack/ as a Modrinth .mrpack.'
+    dependsOn 'refreshModpackSkygradJar'
+
+    archiveFileName = mrpackName
+    destinationDirectory = mrpackOutDir
+    // .mrpack is a plain zip; storing modrinth.index.json + overrides/ at the root.
+    from(modpackDir) {
+        include 'modrinth.index.json'
+        include 'overrides/**'
+    }
+
+    doLast {
+        logger.lifecycle("Modpack written to ${archiveFile.get().asFile}")
+    }
+}
+
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
     module {
