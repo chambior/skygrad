@@ -150,11 +150,11 @@
       "fileSize": 33030286
     },
     {
-      "path": "mods/create-central-kitchen-2.3.0.jar",
-      "hashes": { "sha1": "93ec8d7d6a77f3ee8ba1533c81563cdbcc261293", "sha512": "36c13e70c28efbf811c57c6fca76279aba7a1d94c8a3e85d6f78f525cb01deee56d7e52968b595b3193532c8f3a44cf9022d5a009e5c97cca16aabafb6d3d40e" },
+      "path": "mods/create-central-kitchen-2.4.0.jar",
+      "hashes": { "sha1": "6a91f304a1e023e8b9b34ccf95f19dd74c3edd55", "sha512": "adcdb5a85b2dd727fa2b0563aa9e73d26b58ee3ae57192e049f0c2a1e4a878dc9d07fe20589f6e52e6f4be2ba1bb5ab3a64f5fcf5f1f9a42b9518e7c2380fd23" },
       "env": { "client": "required", "server": "required" },
-      "downloads": ["https://cdn.modrinth.com/data/btq68HMO/versions/SpLHbsZw/create-central-kitchen-2.3.0.jar"],
-      "fileSize": 342206
+      "downloads": ["https://cdn.modrinth.com/data/btq68HMO/versions/TUJIHmUh/create-central-kitchen-2.4.0.jar"],
+      "fileSize": 342464
     },
     {
       "path": "mods/create-enchantment-industry-2.3.1.jar",
