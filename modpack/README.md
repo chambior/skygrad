@@ -7,8 +7,8 @@
   - `overrides/config/ftbquests/` — quest data
 
 ## Mods in the manifest
-44 mods, downloaded from Modrinth at install time. See `modrinth.index.json`.
-Snapshot taken 2026-05-17 against MC 1.21.1 / NeoForge 21.1.228.
+60 mods, downloaded from Modrinth at install time. See `modrinth.index.json`.
+Snapshot taken 2026-05-21 against MC 1.21.1 / NeoForge 21.1.228.
 
 Excluded by request: Sinytra Connector, Forgified Fabric API, Voxy.
 
