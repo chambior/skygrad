@@ -2,13 +2,24 @@
   "block.skygrad.builders_block": "Builder's Block",
   "block.skygrad.sky_engine": "Rainbow Engine",
   "block.skygrad.tower_sentinel": "Tower Sentinel",
+  "block.skygrad.island_heart": "Island Heart",
+  "block.skygrad.fortress_heart": "Fortress Heart",
+  "block.skygrad.cotton_crop": "Cotton Crop",
+
   "item.skygrad.flying_castle_map": "Castle Map",
   "item.skygrad.flying_castle_map.not_found": "No flying castle within range",
-  "filled_map.skygrad.flying_castle": "Flying Castle Map",
   "item.skygrad.flying_fortress_map": "Fortress Map",
   "item.skygrad.flying_fortress_map.not_found": "No flying fortress within range",
-  "filled_map.skygrad.flying_fortress": "Flying Fortress Map",
   "item.skygrad.levitite_ingot": "Levitite Ingot",
+  "item.skygrad.levitite_sheet": "Levitite Sheet",
+  "item.skygrad.levitite_powder": "Levitite Powder",
+  "item.skygrad.ash": "Ash",
+  "item.skygrad.cotton": "Cotton",
+  "item.skygrad.turtle_apple": "Turtle Apple",
+  "item.skygrad.cotton_seeds": "Cotton Seeds",
+
+  "filled_map.skygrad.flying_castle": "Flying Castle Map",
+  "filled_map.skygrad.flying_fortress": "Flying Fortress Map",
 
   "itemGroup.skygrad": "Skygrad",
 
