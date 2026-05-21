@@ -414,6 +414,13 @@
       "env": { "client": "required", "server": "required" },
       "downloads": ["https://cdn.modrinth.com/data/ooyjDLZt/versions/MAHWRQFx/ConstructionSticks-1.21.1-1.3.0.jar"],
       "fileSize": 262933
+    },
+    {
+      "path": "mods/aeroworks-1.2.9.jar",
+      "hashes": { "sha1": "f6f48e509202dca5443904ae077ade67e7f89d70", "sha512": "3713a65a8c76f7c59c62a0d4015bd923b9c6179f3b475422ee44b69b58487ec4550debcc8c583db701a8d3cf0dc79cd3976cff959ddf8149c1fc1cb3b9ee7746" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/P26k79kP/versions/LKsY0cFi/aeroworks-1.2.9.jar"],
+      "fileSize": 183858
     }
   ]
 }
