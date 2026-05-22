@@ -51,6 +51,7 @@ public class JeiCompatibility implements IModPlugin {
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_nugget")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_ingot")));
         itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("createbigcannons:cast_iron_block")));
+        itemsToRemove.add(BuiltInRegistries.ITEM.get(ResourceLocation.parse("farmersdelight:wheat_dough")));
 
         for(var item : itemsToRemove)
         {
