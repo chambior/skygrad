@@ -416,11 +416,46 @@
       "fileSize": 262933
     },
     {
-      "path": "mods/aeroworks-1.2.9.jar",
-      "hashes": { "sha1": "f6f48e509202dca5443904ae077ade67e7f89d70", "sha512": "3713a65a8c76f7c59c62a0d4015bd923b9c6179f3b475422ee44b69b58487ec4550debcc8c583db701a8d3cf0dc79cd3976cff959ddf8149c1fc1cb3b9ee7746" },
+      "path": "mods/aeroworks-1.2.11.jar",
+      "hashes": { "sha1": "ad4061ae23e1e4848f7d9a34f48e37dba9423445", "sha512": "9ee802051aed7cb0e75461c374c360b06c7df8d1bde7b0694f31c4fe226aef3a5db01841d58871a8b5e95043021c2ed971cd0d911ec765886b6ec737d7dff1f8" },
       "env": { "client": "required", "server": "required" },
-      "downloads": ["https://cdn.modrinth.com/data/P26k79kP/versions/LKsY0cFi/aeroworks-1.2.9.jar"],
-      "fileSize": 183858
+      "downloads": ["https://cdn.modrinth.com/data/P26k79kP/versions/vsT0uzkn/aeroworks-1.2.11.jar"],
+      "fileSize": 278098
+    },
+    {
+      "path": "mods/Create Encased-1.21.1-1.8.1-ht1.jar",
+      "hashes": { "sha1": "5ca3d7674676dda5dd472b0433505a54d5e920d0", "sha512": "9c4927dd65546a9b0700dc8547a71115dec56d32edb0c5f2fe38440408db33afa00313eb4d02ad3332d3fe269aae9e485bf3eda3a602821cb0a41ebeec16283a" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/hSSqdyU1/versions/3sUW27Ho/Create%20Encased-1.21.1-1.8.1-ht1.jar"],
+      "fileSize": 2574837
+    },
+    {
+      "path": "mods/VS-Sable-HoseConnectors-0.1.6-1.21.1.jar",
+      "hashes": { "sha1": "a1560a35013b042d9eaebd437a424b39e0aedc83", "sha512": "10409eb82233e0b88f3e70ae5daf9491d02291fe20cdcf4f44963e55f9788ba7483af1d4a23fa8fa9f157c5cc99aad7ab9046811f102033c11ce79755e9bb48e" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/YaZEkFmd/versions/AJSmuGAV/VS-Sable-HoseConnectors-0.1.6-1.21.1.jar"],
+      "fileSize": 734837
+    },
+    {
+      "path": "mods/vista-neoforge-1.21.1-4.4.9.jar",
+      "hashes": { "sha1": "0199fcf06f6df8fd3191464ca9b501fd4b32a61b", "sha512": "d53cc4c3b657271054035abc1cd76c249db9c443e12b4e6e8fe1e4dc32b7acea4a2675a42caa08424b5c88cf3c99c8550fb9ef9a1d63a5294e9252e564d3c3f1" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/zuARv1N7/versions/AaAQuN8W/vista-neoforge-1.21.1-4.4.9.jar"],
+      "fileSize": 5520549
+    },
+    {
+      "path": "mods/createpropulsion-1.1.4.jar",
+      "hashes": { "sha1": "ab3a032dc6d3ccddeb9b5423ae01c3e34b2ee26e", "sha512": "25e9655b6e44ee5539f2b3b620d8657f3b9f0cb840a0917d4bb5e349b5fb301bb15a05e420122cdc2f9236fc9b78019d98816e3f3d939dabf6c5c1b05e6b6862" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/ApkoHNO9/versions/hTnJ29I0/createpropulsion-1.1.4.jar"],
+      "fileSize": 1196735
+    },
+    {
+      "path": "mods/createdieselgenerators-1.21.1-1.3.13.jar",
+      "hashes": { "sha1": "76b2ce52ab285f3fc44916c0a49e29687b3f8e0e", "sha512": "258b650ba1ff3d447ca60795271d2cf4ff79de5ff1332f0cb701df0a8d7ccdd0e486be5ce1e95bcdd0dbd8cea86a6850e3c837d616978a0dd6390212ba4084a4" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/ZM3tt6p1/versions/7TPYyw7R/createdieselgenerators-1.21.1-1.3.13.jar"],
+      "fileSize": 3142529
     }
   ]
 }
