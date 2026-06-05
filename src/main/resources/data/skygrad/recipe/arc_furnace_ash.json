@@ -1,0 +1,24 @@
+{
+  "type": "tfmg:vat_machine_recipe",
+  "allowed_vat_types": [
+    "tfmg:firebrick_lined_vat"
+  ],
+  "ingredients": [
+    {
+      "tag": "c:coal"
+    }
+  ],
+  "machines": [
+    "tfmg:graphite_electrode",
+    "tfmg:graphite_electrode",
+    "tfmg:graphite_electrode"
+  ],
+  "min_size": 9,
+  "processing_time": 5,
+  "results": [
+    {
+      "id": "skygrad:ash",
+      "count": 4
+    }
+  ]
+}
