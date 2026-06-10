@@ -240,6 +240,183 @@ tasks.register('packageModpack', Zip) {
     }
 }
 
+// --- Server pack packaging --------------------------------------------------
+// Produces a tiny bootstrap zip that ships only the .mrpack and install
+// scripts. The scripts fetch nothub/mrpack-install on first run, which then
+// installs NeoForge, downloads every server-required mod from Modrinth's CDN,
+// and copies the modpack overrides (config + custom server-safe jars).
+//
+// Usage:  ./gradlew packageServerPack
+
+def serverPackRootDir   = layout.buildDirectory.dir('serverpack')
+def serverPackName      = "${mod_id}-${mod_version}-server"
+def serverPackStageDir  = serverPackRootDir.map { it.dir(serverPackName) }
+def serverPackZipName   = "${serverPackName}.zip"
+
+def mrpackInstallVersion = '0.16.10'
+def mrpackFileName       = "${mod_id}-${mod_version}.mrpack"
+def neoforgeInstallerUrl = "https://maven.neoforged.net/releases/net/neoforged/neoforge/${project.neo_version}/neoforge-${project.neo_version}-installer.jar"
+
+tasks.register('assembleServerPack') {
+    group = 'modpack'
+    description = 'Stages the lite server pack (mrpack + bootstrap scripts) under build/serverpack/.'
+    dependsOn tasks.named('packageModpack')
+
+    def mrpackArtifact = tasks.named('packageModpack').flatMap { it.archiveFile }
+    inputs.file(mrpackArtifact)
+    inputs.property('mrpackInstallVersion', mrpackInstallVersion)
+    inputs.property('neoVersion', project.neo_version)
+    inputs.property('modVersion', mod_version)
+    outputs.dir(serverPackStageDir)
+
+    def stageProvider  = serverPackStageDir
+    def mrpackProvider = mrpackArtifact
+    def mrpackBaseName = mrpackFileName
+    def installerVer   = mrpackInstallVersion
+    def modVer         = mod_version
+    def neoVer         = project.neo_version
+    def neoInstallerUrl = neoforgeInstallerUrl
+
+    doLast {
+        def stage = stageProvider.get().asFile
+        if (stage.exists()) stage.deleteDir()
+        stage.mkdirs()
+
+        // 1) Copy the freshly built .mrpack into the stage dir.
+        def mrpack = mrpackProvider.get().asFile
+        new File(stage, mrpackBaseName).bytes = mrpack.bytes
+
+        // 2) Linux/macOS bootstrap.
+        new File(stage, 'install.sh').text = """\
+#!/usr/bin/env bash
+set -euo pipefail
+
+MRPACK="${mrpackBaseName}"
+MRPACK_INSTALL_VERSION="${installerVer}"
+NEOFORGE_VERSION="${neoVer}"
+NEOFORGE_INSTALLER_URL="${neoInstallerUrl}"
+
+case "\$(uname -s)-\$(uname -m)" in
+  Linux-x86_64)   ASSET=mrpack-install-linux ;;
+  Linux-aarch64)  ASSET=mrpack-install-linux-arm64 ;;
+  Darwin-x86_64)  ASSET=mrpack-install-darwin ;;
+  Darwin-arm64)   ASSET=mrpack-install-darwin-arm64 ;;
+  *) echo "Unsupported platform: \$(uname -s)-\$(uname -m)"; exit 1 ;;
+esac
+
+if [ ! -x ./mrpack-install ]; then
+    echo "Fetching mrpack-install \${MRPACK_INSTALL_VERSION} (\${ASSET})..."
+    curl -L -o mrpack-install \\
+        "https://github.com/nothub/mrpack-install/releases/download/v\${MRPACK_INSTALL_VERSION}/\${ASSET}"
+    chmod +x mrpack-install
+fi
+
+# --server-dir . overrides mrpack-install's default (which is "mc") so the
+# pack lands in the current directory.
+./mrpack-install "\${MRPACK}" --server-dir .
+
+# mrpack-install deploys mods/configs/libraries but does not generate
+# NeoForge's run.sh launcher. Run the NeoForge installer to produce it.
+# This is idempotent: --installServer skips libraries that already exist.
+if [ ! -f run.sh ]; then
+    NEOFORGE_INSTALLER="neoforge-\${NEOFORGE_VERSION}-installer.jar"
+    if [ ! -f "\${NEOFORGE_INSTALLER}" ]; then
+        echo "Fetching NeoForge installer \${NEOFORGE_VERSION}..."
+        curl -L -o "\${NEOFORGE_INSTALLER}" "\${NEOFORGE_INSTALLER_URL}"
+    fi
+    java -jar "\${NEOFORGE_INSTALLER}" --installServer
+fi
+
+if [ ! -f eula.txt ]; then
+    cat > eula.txt <<EOF
+# By setting eula=true you are agreeing to https://aka.ms/MinecraftEULA
+eula=false
+EOF
+fi
+
+echo
+echo "Install complete. Set eula=true in eula.txt then run ./run.sh."
+"""
+
+        // 3) Windows bootstrap.
+        new File(stage, 'install.bat').text = """\
+@echo off
+setlocal
+set MRPACK=${mrpackBaseName}
+set MRPACK_INSTALL_VERSION=${installerVer}
+set NEOFORGE_VERSION=${neoVer}
+set NEOFORGE_INSTALLER_URL=${neoInstallerUrl}
+set INSTALLER=mrpack-install.exe
+
+if not exist %INSTALLER% (
+    echo Fetching mrpack-install %MRPACK_INSTALL_VERSION%...
+    powershell -Command "Invoke-WebRequest -Uri 'https://github.com/nothub/mrpack-install/releases/download/v%MRPACK_INSTALL_VERSION%/mrpack-install-windows.exe' -OutFile '%INSTALLER%'"
+)
+
+%INSTALLER% %MRPACK% --server-dir .
+
+if not exist run.bat (
+    set NEOFORGE_INSTALLER=neoforge-%NEOFORGE_VERSION%-installer.jar
+    if not exist %NEOFORGE_INSTALLER% (
+        echo Fetching NeoForge installer %NEOFORGE_VERSION%...
+        powershell -Command "Invoke-WebRequest -Uri '%NEOFORGE_INSTALLER_URL%' -OutFile '%NEOFORGE_INSTALLER%'"
+    )
+    java -jar %NEOFORGE_INSTALLER% --installServer
+)
+
+if not exist eula.txt (
+    echo # By setting eula=true you are agreeing to https://aka.ms/MinecraftEULA> eula.txt
+    echo eula=false>> eula.txt
+)
+
+echo.
+echo Install complete. Set eula=true in eula.txt then run run.bat.
+endlocal
+"""
+
+        // 4) README.
+        new File(stage, 'README.txt').text = """\
+Skygrad ${modVer} server pack (lite)
+====================================
+
+Bootstrap pack -- mods are NOT bundled. They download on first install from
+Modrinth's CDN, so an internet connection is required at install time.
+
+1. Install Java 21 (Temurin or Microsoft OpenJDK).
+2. Run install.sh (Linux/macOS) or install.bat (Windows).
+   This fetches nothub/mrpack-install ${installerVer}, which then:
+     - installs the NeoForge dedicated server matching this pack,
+     - downloads every server-required mod from ${mrpackBaseName},
+     - copies modpack overrides (config + custom server-safe jars).
+3. Open eula.txt and set eula=true (you are agreeing to
+   https://aka.ms/MinecraftEULA).
+4. Start the server with ./run.sh (Linux/macOS) or run.bat (Windows) --
+   these are produced by the NeoForge installer that mrpack-install runs.
+
+JVM args live in user_jvm_args.txt, which NeoForge generates on first install.
+Edit it to taste (e.g. -Xmx6G -Xms2G).
+"""
+
+        logger.lifecycle("Lite server pack staged at ${stage}")
+    }
+}
+
+tasks.register('packageServerPack', Zip) {
+    group = 'modpack'
+    description = 'Zips the lite server pack into build/serverpack/.'
+    dependsOn 'assembleServerPack'
+
+    archiveFileName = serverPackZipName
+    destinationDirectory = serverPackRootDir
+    from(serverPackStageDir) {
+        into serverPackName
+    }
+
+    doLast {
+        logger.lifecycle("Server pack zip written to ${archiveFile.get().asFile}")
+    }
+}
+
 // IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
     module {
