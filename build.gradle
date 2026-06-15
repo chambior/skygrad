@@ -229,10 +229,15 @@ tasks.register('packageModpack', Zip) {
 
     archiveFileName = mrpackName
     destinationDirectory = mrpackOutDir
-    // .mrpack is a plain zip; storing modrinth.index.json + overrides/ at the root.
+    // .mrpack is a plain zip; storing modrinth.index.json + overrides at the root.
+    // server-overrides/ is only applied by mrpack-install on server installs;
+    // icon.png is for launchers that show a pack icon (PrismLauncher, ATLauncher).
     from(modpackDir) {
         include 'modrinth.index.json'
+        include 'icon.png'
         include 'overrides/**'
+        include 'server-overrides/**'
+        include 'client-overrides/**'
     }
 
     doLast {
