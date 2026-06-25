@@ -2,6 +2,7 @@ package fr.tchkll.skygrad.items;
 
 import fr.tchkll.skygrad.Skygrad;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -14,9 +15,13 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.MapItem;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +38,10 @@ public class FlyingFortressMapItem extends Item {
     public static final TagKey<Structure> FORTRESS_MAP_TARGETS = TagKey.create(
             Registries.STRUCTURE,
             ResourceLocation.fromNamespaceAndPath(Skygrad.MODID, "on_fortress_maps"));
+
+    /** Structure set used for placement-formula fallback (when the chunk doesn't already record the structure). */
+    private static final ResourceLocation FALLBACK_STRUCTURE_SET =
+            ResourceLocation.fromNamespaceAndPath(Skygrad.MODID, "flying_fortress");
 
     /** Search radius in chunks around the player. */
     private static final int SEARCH_RADIUS = 100;
@@ -53,8 +62,19 @@ public class FlyingFortressMapItem extends Item {
         }
 
         ServerLevel serverLevel = (ServerLevel) level;
+        BlockPos playerPos = player.blockPosition();
+
+        Skygrad.LOGGER.info("[FortressMap] use() player={} pos={} dim={}",
+                player.getName().getString(), playerPos, serverLevel.dimension().location());
+
         BlockPos found = serverLevel.findNearestMapStructure(
-                FORTRESS_MAP_TARGETS, player.blockPosition(), SEARCH_RADIUS, true);
+                FORTRESS_MAP_TARGETS, playerPos, SEARCH_RADIUS, false);
+        Skygrad.LOGGER.info("[FortressMap] findNearestMapStructure -> {}", found);
+
+        if (found == null) {
+            found = findNearestPlacementCandidate(serverLevel, playerPos, FALLBACK_STRUCTURE_SET, SEARCH_RADIUS);
+            Skygrad.LOGGER.info("[FortressMap] placement-fallback -> {}", found);
+        }
 
         if (found == null) {
             player.displayClientMessage(
@@ -63,7 +83,6 @@ public class FlyingFortressMapItem extends Item {
             return InteractionResultHolder.fail(inHand);
         }
 
-        // Vanilla treasure-map equivalent: build a scale-2 explorer map and stamp on a marker.
         ItemStack explorerMap = MapItem.create(serverLevel,
                 found.getX(), found.getZ(), MAP_SCALE, true, true);
         MapItem.renderBiomePreviewMap(serverLevel, explorerMap);
@@ -71,17 +90,64 @@ public class FlyingFortressMapItem extends Item {
         explorerMap.set(DataComponents.CUSTOM_NAME,
                 Component.translatable("filled_map.skygrad.flying_fortress"));
 
-        if (!player.getAbilities().instabuild) {
-            inHand.shrink(1);
-        }
-        if (!player.getInventory().add(explorerMap)) {
-            player.drop(explorerMap, false);
-        }
-
         level.playSound(null, player.getX(), player.getY(), player.getZ(),
                 SoundEvents.UI_CARTOGRAPHY_TABLE_TAKE_RESULT,
                 player.getSoundSource(), 1.0F, 1.0F);
 
-        return InteractionResultHolder.consume(inHand);
+        // ItemUtils.createFilledResult handles the consume-and-replace cleanly:
+        // when the held stack hits 0 after the shrink it returns `explorerMap` as the
+        // new in-hand stack instead of having vanilla clobber the hand slot with EMPTY.
+        return InteractionResultHolder.sidedSuccess(
+                ItemUtils.createFilledResult(inHand, player, explorerMap, false),
+                level.isClientSide());
+    }
+
+    /**
+     * Fallback when {@link ServerLevel#findNearestMapStructure} returns null — typical when chunks
+     * were generated before this structure existed, so their reference map says "not present".
+     * We compute potential structure chunks directly from the structure set's placement formula
+     * and return the nearest one to the player. The candidate may sit in an unloaded chunk that
+     * will generate the structure when the player arrives, or in an already-generated chunk that
+     * predates the structure (in which case nothing is there — there is no way to retro-add it).
+     */
+    private static BlockPos findNearestPlacementCandidate(
+            ServerLevel serverLevel, BlockPos origin, ResourceLocation structureSetId, int radius) {
+        StructureSet set = serverLevel.registryAccess()
+                .registryOrThrow(Registries.STRUCTURE_SET)
+                .get(structureSetId);
+        if (set == null) {
+            Skygrad.LOGGER.warn("[FortressMap] structure set {} not found in registry", structureSetId);
+            return null;
+        }
+        if (!(set.placement() instanceof RandomSpreadStructurePlacement rsp)) {
+            Skygrad.LOGGER.warn("[FortressMap] structure set {} placement is not RandomSpread ({})",
+                    structureSetId, set.placement().getClass().getSimpleName());
+            return null;
+        }
+
+        long seed = serverLevel.getSeed();
+        int spacing = rsp.spacing();
+        int originChunkX = SectionPos.blockToSectionCoord(origin.getX());
+        int originChunkZ = SectionPos.blockToSectionCoord(origin.getZ());
+        int originCellX = Math.floorDiv(originChunkX, spacing);
+        int originCellZ = Math.floorDiv(originChunkZ, spacing);
+
+        BlockPos best = null;
+        double bestDistSq = Double.MAX_VALUE;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                ChunkPos candidate = rsp.getPotentialStructureChunk(seed, originCellX + dx, originCellZ + dz);
+                int bx = candidate.getMiddleBlockX();
+                int bz = candidate.getMiddleBlockZ();
+                double ddx = bx - origin.getX();
+                double ddz = bz - origin.getZ();
+                double distSq = ddx * ddx + ddz * ddz;
+                if (distSq < bestDistSq) {
+                    bestDistSq = distSq;
+                    best = new BlockPos(bx, origin.getY(), bz);
+                }
+            }
+        }
+        return best;
     }
 }
