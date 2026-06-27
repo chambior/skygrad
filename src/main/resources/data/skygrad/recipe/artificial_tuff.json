@@ -14,7 +14,7 @@
     }
   ],
   "heat_requirement": "superheated",
-  "processing_time": 100,
+  "processing_time": 20,
   "results": [
     {
       "id": "minecraft:tuff",
