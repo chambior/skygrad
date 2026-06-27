@@ -21,6 +21,8 @@
   "filled_map.skygrad.flying_castle": "Flying Castle Map",
   "filled_map.skygrad.flying_fortress": "Flying Fortress Map",
 
+  "item.minecraft.potion.effect.regeneration": "Lait Fraise",
+
   "itemGroup.skygrad": "Skygrad",
 
   "skygrad.config.flyingIslandCenterY": "Island base Y level",
