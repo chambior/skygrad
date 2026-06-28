@@ -1,0 +1,18 @@
+{
+  "type": "create:mixing",
+  "heat_requirement": "superheated",
+  "ingredients": [
+    { "item": "aeinfinitybooster:infinity_card" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" },
+    { "item": "skygrad:levitite_ingot" }
+  ],
+  "results": [
+    { "id": "aeinfinitybooster:dimension_card" }
+  ]
+}

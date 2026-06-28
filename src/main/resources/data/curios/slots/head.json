@@ -1,9 +1,0 @@
-{
-  "size": 1,
-  "operations_per_tick": 10,
-  "use_native_gui": true,
-  "render_toggle": true,
-  "drop_rule": "DEFAULT",
-  "order": 50,
-  "icon": "curios:slot/empty_head_slot"
-}
