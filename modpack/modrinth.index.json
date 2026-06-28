@@ -94,6 +94,13 @@
       "fileSize": 242235
     },
     {
+      "path": "mods/aeinfinitybooster-neoforge-1.21.1-1.0.0.54.jar",
+      "hashes": { "sha1": "d00daf281a852358022b936a21ae272578f00afd", "sha512": "ee273cf78ffe1848c9acdaefd243d107689f90484a420a4864bfbac7219c16dd5a1c944231159754e47dabd617b4726f2b9843a86ebbf8e9865592fcd931372e" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/VQhDBNs8/versions/FkjLiVaY/aeinfinitybooster-neoforge-1.21.1-1.0.0.54.jar"],
+      "fileSize": 30409
+    },
+    {
       "path": "mods/appliedenergistics2-19.2.17.jar",
       "hashes": { "sha1": "49c18d6a4af487957d7e5a6ad5dcbf71090b8e14", "sha512": "55edfd948366aff620881e0625e48c333a2cb847e73249bc0b588efbc4b86709992a8ffbca97ea387e270df4186fe7f74ee2f27b739f1c952e932becfb9dea33" },
       "env": { "client": "required", "server": "required" },
