@@ -332,11 +332,11 @@
       "fileSize": 43338
     },
     {
-      "path": "mods/treephysics-1.2.jar",
-      "hashes": { "sha1": "04e7dffcbe03995dbd59b5a72afd9bd61d331fb8", "sha512": "86d955e7744f228f74f81473e536a16b490d687b3b88b68838c1c26317886810e7a9711d1ff298c56dfb82f956de25ce539ab665d523a2e57aec82108c1fc210" },
+      "path": "mods/treephysics-1.7.jar",
+      "hashes": { "sha1": "892f72f9069b09425a4c1ff88b265046f67d28a6", "sha512": "61ae4f8dcfcd41ff6d309cc36ac97ba4d96122589437f9c58604f858ccaaebab5cdc13017492dd1a8de0ba5f3497f453fca2ab2cf2e26d6b222029114a2f2aca" },
       "env": { "client": "required", "server": "required" },
-      "downloads": ["https://cdn.modrinth.com/data/AlVH5pr8/versions/l66RglR4/treephysics-1.2.jar"],
-      "fileSize": 419762
+      "downloads": ["https://cdn.modrinth.com/data/AlVH5pr8/versions/KStnB9DO/treephysics-1.7.jar"],
+      "fileSize": 436013
     },
     {
       "path": "mods/climbable_ropes-1.9.0.jar",
@@ -505,6 +505,13 @@
       "env": {"client": "required", "server": "required"},
       "downloads": ["https://cdn.modrinth.com/data/vvuO3ImH/versions/yohfFbgD/curios-neoforge-9.5.1%2B1.21.1.jar"],
       "fileSize": 410690
+    },
+    {
+      "path": "mods/lithium-neoforge-0.15.4+mc1.21.1.jar",
+      "hashes": { "sha1": "97212e45c963730bbfc7c44780df99317814c21b", "sha512": "2735da2088b88a8bdcd4ad02a2b6fffbfd3925557cefd4fa54b5477dfb9e582ea7f521300c060f57dff1325dd21bff276b7333363ad3371ed6893e3de9eca9cd" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/gvQqBUqZ/versions/DDUrRVCA/lithium-neoforge-0.15.4%2Bmc1.21.1.jar"],
+      "fileSize": 774220
     }
   ]
 }
