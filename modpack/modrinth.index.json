@@ -269,6 +269,13 @@
       "fileSize": 12889000
     },
     {
+      "path": "mods/SSRD-1.8.1-1.21.1.jar",
+      "hashes": { "sha1": "8cf17cfff53fb82bfca5536bde2eef5ac56f4477", "sha512": "2ae36a7a8bf73a64e58a245b795a04fdeff9d87f4bfb94156400c2ef15a9ec2b0b2e7f1031efa197cea0270b7815335c99c50ab8b9d219188521fc14233850fd" },
+      "env": { "client": "required", "server": "required" },
+      "downloads": ["https://cdn.modrinth.com/data/fJ183v3D/versions/ia8u5lk9/SSRD-1.8.1-1.21.1.jar"],
+      "fileSize": 65135
+    },
+    {
       "path": "mods/sodium-extra-neoforge-0.9.3+mc1.21.1.jar",
       "hashes": { "sha1": "3aaac7712521b477acc73757459b3883c4e0bbda", "sha512": "36a7c237519c35e35300deadbdcfd1a270c507d49b9de10eea2cad1075c67567935e95d49ca9db470bd946de8e2ef7634361f912866f84570f3c367bf96d2b79" },
       "env": { "client": "required", "server": "unsupported" },
@@ -509,7 +516,7 @@
     {
       "path": "mods/DistantHorizons-3.2.0-b-1.21.1-fabric-neoforge.jar",
       "hashes": { "sha1": "df25e8cfe06917963778723a1d9a60610dd21bec", "sha512": "d4199f92f992fbd2c75a3b0e4e81c8a98bee889013f7347f2149ffa62c86748bde22135e9b2c82a10875db94fa576571c661c5ee16d2f567bd8a93d6f255fd22" },
-      "env": { "client": "required", "server": "unsupported" },
+      "env": { "client": "required", "server": "required" },
       "downloads": ["https://cdn.modrinth.com/data/uCdwusMi/versions/ZpKb4kZp/DistantHorizons-3.2.0-b-1.21.1-fabric-neoforge.jar"],
       "fileSize": 30207268
     }
