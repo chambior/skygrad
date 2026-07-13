@@ -226,7 +226,6 @@ tasks.register('packageModpack', Zip) {
     group = 'modpack'
     description = 'Builds the mod and packages modpack/ as a Modrinth .mrpack.'
     dependsOn 'refreshModpackSkygradJar'
-    finalizedBy 'packageVoxyModpack'
 
     archiveFileName = mrpackName
     destinationDirectory = mrpackOutDir
@@ -243,42 +242,6 @@ tasks.register('packageModpack', Zip) {
 
     doLast {
         logger.lifecycle("Modpack written to ${archiveFile.get().asFile}")
-    }
-}
-
-// --- Voxy variant -----------------------------------------------------------
-// Same content as packageModpack, but with the jars in modpack/voxy_overrides/mods/
-// overlayed into overrides/mods/. Runs automatically after packageModpack via
-// the finalizedBy hook above; can also be invoked directly.
-def voxyMrpackName    = "${mod_id}-voxy-${mod_version}.mrpack"
-def voxyExtrasModsDir = file("$modpackDir/voxy_overrides/mods")
-
-tasks.register('packageVoxyModpack', Zip) {
-    group = 'modpack'
-    description = 'Builds a Skygrad+Voxy variant .mrpack with voxy_overrides/mods sideloaded.'
-    dependsOn 'refreshModpackSkygradJar'
-
-    archiveFileName = voxyMrpackName
-    destinationDirectory = mrpackOutDir
-
-    from(modpackDir) {
-        include 'modrinth.index.json'
-        include 'icon.png'
-        include 'overrides/**'
-        include 'server-overrides/**'
-        include 'client-overrides/**'
-    }
-    from(voxyExtrasModsDir) {
-        into 'overrides/mods'
-    }
-
-    onlyIf {
-        voxyExtrasModsDir.exists() &&
-                (voxyExtrasModsDir.listFiles()?.any { it.isFile() && it.name.endsWith('.jar') } ?: false)
-    }
-
-    doLast {
-        logger.lifecycle("Voxy variant written to ${archiveFile.get().asFile}")
     }
 }
 
