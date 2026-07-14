@@ -514,11 +514,18 @@
       "fileSize": 774220
     },
     {
-      "path": "mods/DistantHorizons-3.2.0-b-1.21.1-fabric-neoforge.jar",
-      "hashes": { "sha1": "df25e8cfe06917963778723a1d9a60610dd21bec", "sha512": "d4199f92f992fbd2c75a3b0e4e81c8a98bee889013f7347f2149ffa62c86748bde22135e9b2c82a10875db94fa576571c661c5ee16d2f567bd8a93d6f255fd22" },
-      "env": { "client": "required", "server": "required" },
-      "downloads": ["https://cdn.modrinth.com/data/uCdwusMi/versions/ZpKb4kZp/DistantHorizons-3.2.0-b-1.21.1-fabric-neoforge.jar"],
-      "fileSize": 30207268
+      "path": "mods/connector-2.0.0-beta.15+1.21.1-full.jar",
+      "hashes": {"sha1": "3ca84be625bb792f796dd50963d4d21842370893", "sha512": "71b9a887298d3f60c3f5ae72835a6e146f3e664184f1d60edef5e2b989e5b6ef460757526e87a3b1a162e5778ea932aa4da8223aa557ffa2178ffb574a42533d"},
+      "env": {"client": "required", "server": "required"},
+      "downloads": ["https://cdn.modrinth.com/data/u58R1TMW/versions/kDbM9LpX/connector-2.0.0-beta.15%2B1.21.1-full.jar"],
+      "fileSize": 4527056
+    },
+    {
+      "path": "mods/forgified-fabric-api-0.116.7+2.2.4+1.21.1.jar",
+      "hashes": {"sha1": "459b5f4c7297b2f7649d43137f3e5a069b69b707", "sha512": "858acb32a79e7ed1f37472bd7c50e3d2f47c7d7f6e734a8cece3800eb30d565a09580c261778ea73a0ae25e10e9eb9b16866012fe61d24f671b0ffe3ae2377dd"},
+      "env": {"client": "required", "server": "required"},
+      "downloads": ["https://cdn.modrinth.com/data/Aqlf1Shp/versions/7nHK7hMg/forgified-fabric-api-0.116.7%2B2.2.4%2B1.21.1.jar"],
+      "fileSize": 5569793
     }
   ]
 }
